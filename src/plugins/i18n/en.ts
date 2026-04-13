@@ -3,6 +3,68 @@ export default {
   App: {
     title: 'Vitrine Démocratique',
   },
+  About: {
+    eyebrow: 'CAPP · Université Laval',
+    title: 'La Vitrine Démocratique',
+    description: 'The Vitrine measures what really occupies the public space — and shows it to you as it is.',
+    mission: {
+      heading: 'Why the Vitrine exists',
+      p1: 'We live in an era of informational abundance that paradoxically impoverishes what we share in common. Algorithms optimize for engagement — for what makes us react, not necessarily for what matters.',
+      p2: 'What we have lost is the common world: the set of facts, issues and concerns that allow a society to debate, choose, and govern itself. The Vitrine Démocratique is a response to this problem — an anchor: here is what really occupies the public space today, rigorously measured, without algorithmic filtering.',
+      quote: 'The Vitrine Démocratique is the news as it exists in the public space — not as the algorithm chose it for you.',
+    },
+    institution: {
+      heading: 'The institution',
+      text: 'The Vitrine is an initiative of the Centre d\'analyse des politiques publiques (CAPP) and the Leadership Chair in Teaching of Digital Social Science (CLESSN) at Université Laval, under the direction of Professor Yannick Dufresne. Data is collected and stored in Quebec, on Université Laval servers, with the strictest ethical authorizations.',
+    },
+    team: {
+      heading: 'The team',
+    },
+  },
+  Contact: {
+    eyebrow: 'CAPP · CLESSN',
+    title: 'Contact',
+    description: 'Send us your questions, comments or data access requests.',
+  },
+  Partners: {
+    eyebrow: 'Vitrine Démocratique',
+    title: 'Partners',
+    description: 'Thank you to the partners who make the Vitrine Démocratique possible.',
+    academic: {
+      heading: 'Academic Partners',
+    },
+    industry: {
+      heading: 'Collaborators',
+    },
+  },
+  Methodology: {
+    eyebrow: 'Vitrine Démocratique',
+    title: 'Methodology',
+    description: 'How we measure the three pillars of Quebec\'s public space.',
+    overview: {
+      heading: 'Overview',
+      text: 'The Vitrine continuously aggregates data from three distinct sources — media, parliamentary speeches and public opinion — to produce an objective portrait of what occupies the public space. Each source is processed by a dedicated algorithm, validated by political science researchers.',
+    },
+    media: {
+      eyebrow: 'Media',
+      title: 'Media salience',
+      text: 'Headlines from major Quebec media are collected continuously. A salience index measures the relative presence of each topic in media coverage, weighted by source and time of publication.',
+    },
+    authorities: {
+      eyebrow: 'Decision-makers',
+      title: 'Parliamentary speech',
+      text: 'Parliamentary interventions at the National Assembly and the House of Commons are automatically extracted. The index measures what fraction of political discourse is devoted to each issue, by party and period.',
+    },
+    citizens: {
+      eyebrow: 'Citizens',
+      title: 'Public opinion',
+      text: 'Daily online surveys of Quebecers measure their concerns and positions on current issues. Results are weighted by gender, age and education level.',
+    },
+    ethics: {
+      heading: 'Ethics and transparency',
+      text: 'The CLESSN holds the strictest ethical authorizations. Data is collected and stored in Quebec, on Université Laval servers. No personal data is used for media or parliamentary salience indices.',
+    },
+  },
   AppLanguage: {
     current: {
       long: 'English',
@@ -290,14 +352,16 @@ export default {
   },
   Content: {
     about: {
-      markdown: `# About us
+      eyebrow: 'CLESSN',
+      markdown: `The Vitrine Démocratique is a gathering point for the Quebec society. It allows to continuously take the pulse of the three pillars of democracy: decision-makers, the media and citizens.
 
-The Vitrine Démocratique is a gathering point for the Quebec society. It allows to continuously take the pulse of the three pillars of democracy: decision-makers, the media and citizens.
-
-Thanks to numerous macro-democratic indicators endorsed by the recent scientific research, the Vitrine helps measure the state of Quebec's political and social health. Not only are these indicators closely studied by political science researchers, but are also made freely available to whoever wants to learn more about their democracy, whether it is the decision-makers, the media or the citizens 
+Thanks to numerous macro-democratic indicators endorsed by the recent scientific research, the Vitrine helps measure the state of Quebec's political and social health. Not only are these indicators closely studied by political science researchers, but are also made freely available to whoever wants to learn more about their democracy, whether it is the decision-makers, the media or the citizens.
 
 The Vitrine Démocratique is an initiative led by the Leadership Chair in the Teaching of Digital Social Science (CLESSN) at Université Laval and its holder, Professor Yannick Dufresne. The CLESSN is proud to hold the strictest ethical authorizations, as expected from such scientific tool. It is thus able to ensure the security of the data collected and stored in Quebec, on Université Laval's servers.
 
+## The CLESSN Team
+
+:::div{className="ContentPage-team-grid"}
 Adrien Cloutier
 :div[Data scientist]
 
@@ -346,7 +410,7 @@ Marc-André Bodet
 Marc-Antoine Rancourt
 :div[Data scientist]
 
-Maria Alexandrov 
+Maria Alexandrov
 :div[Communications advisor]
 
 Mathieu Ouimet
@@ -365,7 +429,8 @@ William Poirier
 :div[Data analyst]
 
 Yannick Dufresne
-:div[Research chair holder]`,
+:div[Research chair holder]
+:::`,
       title: 'About us',
     },
     conditions: {
@@ -423,9 +488,9 @@ At all times, the Vitrine Démocratique reserves the right to modify the user co
       title: 'Terms of Use',
     },
     contact: {
-      markdown: `# Contact Us
-
-Send us your questions, comments and/or access request to our data for research purposes at info@clessn.com.`,
+      eyebrow: 'CLESSN',
+      markdown: `Send us your questions, comments and/or access request to our data for research purposes at info@clessn.com.
+`,
       title: 'Contact Us',
     },
     'mardown-demo': {
@@ -555,9 +620,8 @@ will create an element like
       title: 'Markdown demo',
     },
     methodology: {
-      markdown: `# Methodology
-
-On its home page, the Vitrine Démocratique offers an overview of three types of data thanks to the graph representing the "mood exchange" of Quebec society. The three pillars of democracy are: the voice of citizens, the media texts and the speeches of decision-makers.
+      eyebrow: 'Vitrine Démocratique',
+      markdown: `On its home page, the Vitrine Démocratique offers an overview of three types of data thanks to the graph representing the "mood exchange" of Quebec society. The three pillars of democracy are: the voice of citizens, the media texts and the speeches of decision-makers.
 
 Public opinion data is collected and analyzed in real time through daily web-based surveys of Quebecers, including on CLESSN's Quorum Project web app. Questions regarding users' perception and mood regarding COVID-19 are aggregated in order to produce a daily score of the public opinion.
 
@@ -594,43 +658,19 @@ The data is then weighted by gender, age, level of education, and other, so as f
       title: 'Methodology',
     },
     partners: {
-      markdown: `# Partners
-
-We thank our numerous partners who help us reach the democratic goals of the Vitrine Démocratique.
-
----
+      eyebrow: 'Vitrine Démocratique',
+      markdown: `We thank our numerous partners who help us reach the democratic goals of the Vitrine Démocratique.
 
 ## Academic Partnerships
 
-:::figure
-  [![CLESSN](./partners/clessn_logoEN.png)](https://www.clessn.com/index.html)
-  [![CRDIP](./partners/crdip_logoEN.png)](https://www.democratie.chaire.ulaval.ca/index.php?pid=924)
-:::figcaption
-  [![CSDC](./partners/cecd_logoEN.png)](https://csdc-cecd.ca/)
-  [![CAPP](./partners/capp_logoEN.png)](https://www.capp.ulaval.ca/en)
+:::div{className="ContentPage-logos-grid"}
+[![CLESSN](./partners/clessn_logoEN.png)](https://www.clessn.com/index.html) [![CRDIP](./partners/crdip_logoEN.png)](https://www.democratie.chaire.ulaval.ca/index.php?pid=924) [![CSDC](./partners/cecd_logoEN.png)](https://csdc-cecd.ca/) [![CAPP](./partners/capp_logoEN.png)](https://www.capp.ulaval.ca/en) [![FoDEM](./partners/fodem_logoEN.png)](https://www.fodem.ca/) [![GRCP](./partners/grcp_logoEN.png)](https://www.grcp.ulaval.ca/) [![CRCIS](./partners/crcis_logoEN.png)](https://immigration-securite.chaire.ulaval.ca/en/about-us/)
 :::
-:::figure
-  [![FoDEM](./partners/fodem_logoEN.png)](https://www.fodem.ca/)
-  [![GRCP](./partners/grcp_logoEN.png)](https://www.grcp.ulaval.ca/)
-:::figcaption
-  [![CRCIS](./partners/crcis_logoEN.png)](https://immigration-securite.chaire.ulaval.ca/en/about-us/)
-:::
-
----
 
 ## Collaborators
 
-:::figure
-  [![Synopis](./partners/synopsis_logoEN.png)](https://synopsis.marketing/)
-  [![lg2](./partners/lg2_logoEN.png)](https://lg2.com/en/)
-:::figcaption
-  [![Unicorn](./partners/unicorn_logoEN.png)](https://unicornpowered.com/en/)
-  [![Tact](./partners/tact_logoEN.png)](https://www.tactconseil.ca/en/)
-:::
-
-:::figure
-  [![Infoscope](./partners/infoscope_logoEN.png)](https://www.infoscope.ca/)
-:::figcaption
+:::div{className="ContentPage-logos-grid"}
+[![Synopsis](./partners/synopsis_logoEN.png)](https://synopsis.marketing/) [![lg2](./partners/lg2_logoEN.png)](https://lg2.com/en/) [![Unicorn](./partners/unicorn_logoEN.png)](https://unicornpowered.com/en/) [![Tact](./partners/tact_logoEN.png)](https://www.tactconseil.ca/en/) [![Infoscope](./partners/infoscope_logoEN.png)](https://www.infoscope.ca/)
 :::`,
       title: 'Partners',
     },

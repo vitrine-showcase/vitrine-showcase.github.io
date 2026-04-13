@@ -6,6 +6,68 @@ export default {
   App: {
     title: 'Vitrine démocratique',
   },
+  About: {
+    eyebrow: 'CAPP · Université Laval',
+    title: 'La Vitrine Démocratique',
+    description: 'La Vitrine mesure ce qui occupe vraiment l\'espace public — et te le montre tel quel.',
+    mission: {
+      heading: 'Pourquoi la Vitrine existe',
+      p1: 'Nous vivons dans une époque d\'abondance informationnelle qui produit, paradoxalement, un appauvrissement de ce que nous avons en commun. Les algorithmes optimisent pour l\'engagement — c\'est-à-dire pour ce qui nous fait réagir, pas nécessairement pour ce qui compte.',
+      p2: 'Ce que nous avons perdu, c\'est le monde commun : l\'ensemble de faits, d\'enjeux et de préoccupations qui font qu\'une société peut débattre, choisir, se gouverner. La Vitrine Démocratique est une réponse à ce problème — un point d\'ancrage : voici ce qui occupe réellement l\'espace public aujourd\'hui, mesuré rigoureusement, sans filtre algorithmique.',
+      quote: 'La Vitrine Démocratique, c\'est l\'actualité telle qu\'elle existe dans l\'espace public — pas telle que l\'algorithme l\'a choisie pour toi.',
+    },
+    institution: {
+      heading: 'L\'institution',
+      text: 'La Vitrine est une initiative du Centre d\'analyse des politiques publiques (CAPP) et de la Chaire de leadership en enseignement des sciences sociales numériques (CLESSN) de l\'Université Laval, sous la direction du professeur Yannick Dufresne. Les données sont collectées et entreposées au Québec, dans les serveurs de l\'Université Laval, selon les autorisations éthiques les plus strictes.',
+    },
+    team: {
+      heading: 'L\'équipe',
+    },
+  },
+  Contact: {
+    eyebrow: 'CAPP · CLESSN',
+    title: 'Contact',
+    description: 'Faites-nous parvenir vos questions, commentaires ou demandes d\'accès aux données.',
+  },
+  Partners: {
+    eyebrow: 'Vitrine Démocratique',
+    title: 'Partenaires',
+    description: 'Merci aux partenaires qui rendent possible la Vitrine Démocratique.',
+    academic: {
+      heading: 'Partenaires académiques',
+    },
+    industry: {
+      heading: 'Collaborateurs',
+    },
+  },
+  Methodology: {
+    eyebrow: 'Vitrine Démocratique',
+    title: 'Méthodologie',
+    description: 'Comment nous mesurons les trois piliers de l\'espace public québécois.',
+    overview: {
+      heading: 'Vue d\'ensemble',
+      text: 'La Vitrine agrège en continu des données provenant de trois sources distinctes — les médias, les discours parlementaires et l\'opinion publique — pour produire un portrait objectif de ce qui occupe l\'espace public. Chaque source est traitée par un algorithme dédié, validé par des chercheurs en sciences politiques.',
+    },
+    media: {
+      eyebrow: 'Médias',
+      title: 'Saillance médiatique',
+      text: 'Les manchettes des principaux médias québécois sont collectées en continu. Un indice de saillance mesure la présence relative de chaque sujet dans la couverture médiatique, pondérée par la source et le moment de publication.',
+    },
+    authorities: {
+      eyebrow: 'Décideurs',
+      title: 'Parole en chambre',
+      text: 'Les interventions parlementaires à l\'Assemblée nationale et à la Chambre des communes sont extraites automatiquement. L\'indice mesure quelle fraction du discours politique est consacrée à chaque enjeu, par parti et par période.',
+    },
+    citizens: {
+      eyebrow: 'Citoyens',
+      title: 'Opinion publique',
+      text: 'Des sondages quotidiens menés en ligne auprès des Québécois mesurent leurs préoccupations et leurs positions sur les enjeux d\'actualité. Les résultats sont pondérés selon le genre, l\'âge et le niveau d\'éducation.',
+    },
+    ethics: {
+      heading: 'Éthique et transparence',
+      text: 'La CLESSN détient les autorisations éthiques les plus strictes. Les données sont collectées et entreposées au Québec, dans les serveurs de l\'Université Laval. Aucune donnée personnelle n\'est utilisée pour les indices de saillance médiatique ou parlementaire.',
+    },
+  },
   AppLanguage: {
     current: {
       long: 'Français',
@@ -306,15 +368,16 @@ Vos réponses permettront d'atteindre le Quorum!`,
   },
   Content: {
     about: {
-      markdown: `# À propos
-
-La Vitrine démocratique offre un point de rencontre pour l'ensemble de la société québécoise. Elle permet de prendre le pouls, en continu, des trois piliers de la démocratie que constituent les décideurs, les médias et les citoyens. 
+      eyebrow: 'CLESSN',
+      markdown: `La Vitrine démocratique offre un point de rencontre pour l'ensemble de la société québécoise. Elle permet de prendre le pouls, en continu, des trois piliers de la démocratie que constituent les décideurs, les médias et les citoyens.
 
 Grâce à de nombreux indicateurs macro-démocratiques avalisés par les recherches scientifiques récentes, la Vitrine permet de mesurer l'état de santé politique et social du Québec. Non seulement ces indicateurs sont étudiés de près par les chercheuses et chercheurs en science politique, ils sont également présentés en libre accès aux décideurs, aux médias et aux citoyens souhaitant en apprendre davantage sur leur démocratie.
 
 La Vitrine démocratique est une initiative menée par la Chaire de leadership en enseignement des sciences sociales numériques (CLESSN) de l'Université Laval et son titulaire, le professeur Yannick Dufresne. La CLESSN est fière de détenir les autorisations éthiques les plus strictes, tel qu'attendu d'un outil scientifique. Elle est ainsi en mesure d'assurer la sécurité des données collectées et entreposées au Québec, dans les serveurs de l'Université Laval.
+
 ## L'équipe de la CLESSN
 
+:::div{className="ContentPage-team-grid"}
 Adrien Cloutier
 :div[Scientifique de données]
 
@@ -363,7 +426,7 @@ Marc-André Bodet
 Marc-Antoine Rancourt
 :div[Scientifique de données]
 
-Maria Alexandrov 
+Maria Alexandrov
 :div[Conseillère en communication]
 
 Mathieu Ouimet
@@ -382,7 +445,8 @@ William Poirier
 :div[Analyste de données]
 
 Yannick Dufresne
-:div[Titulaire de la CLESSN]`,
+:div[Titulaire de la CLESSN]
+:::`,
       title: 'À propos',
     },
     conditions: {
@@ -398,9 +462,9 @@ En créant votre compte, vous vous engagez à :
       title: "Politique d'utilisation",
     },
     contact: {
-      markdown: `# Contact
-
-Faites-nous parvenir vos questions, commentaires et/ou demandes d'accès aux données pour les chercheurs à info@clessn.com.`,
+      eyebrow: 'CLESSN',
+      markdown: `Faites-nous parvenir vos questions, commentaires et/ou demandes d'accès aux données pour les chercheurs à info@clessn.com.
+`,
       title: 'Contact',
     },
     'mardown-demo': {
@@ -530,9 +594,8 @@ will create an element like
       title: 'Markdown demo',
     },
     methodology: {
-      markdown: `# Méthodologie
-
-En page d'accueil, la Vitrine démocratique offre une vue d'ensemble sur trois types de données grâce au graphique représentant la « bourse de l'humeur » de la société québécoise. On y regroupe donc : la voix des citoyens, les textes des médias et les discours des décideurs, les trois piliers de la démocratie.
+      eyebrow: 'Vitrine Démocratique',
+      markdown: `En page d'accueil, la Vitrine démocratique offre une vue d'ensemble sur trois types de données grâce au graphique représentant la « bourse de l'humeur » de la société québécoise. On y regroupe donc : la voix des citoyens, les textes des médias et les discours des décideurs, les trois piliers de la démocratie.
 
 Les données d'opinion publique sont collectées et analysées en temps réel grâce à des sondages menés quotidiennement sur le Web auprès des Québécois.e.s, et ce, entre autres grâce à l'application Web Projet Quorum de la CLESSN. Les questions relatives à la perception et à l'attitude des répondants face à la COVID-19 sont agrégées de manière à produire un aperçu de ton quotidien de l'opinion publique.
 
@@ -570,42 +633,19 @@ Les données sont pondérées en fonction de variables comme le genre, l'âge et
       title: 'Méthodologie',
     },
     partners: {
-      markdown: `# Partenaires
-
-Merci à nos nombreux partenaires qui ont permis et continuent de permettre la réalisation des objectifs démocratiques derrière la Vitrine démocratique.
-
----
+      eyebrow: 'Vitrine Démocratique',
+      markdown: `Merci à nos nombreux partenaires qui ont permis et continuent de permettre la réalisation des objectifs démocratiques derrière la Vitrine démocratique.
 
 ## Partenaires académiques
 
-:::figure
-  [![CLESSN](./partners/clessn_logo.png)](https://www.clessn.com/index.html)
-  [![CRDIP](./partners/crdip_logo.png)](https://www.democratie.chaire.ulaval.ca/index.php?pid=924)
-:::figcaption
-  [![CECD](./partners/cecd_logo.png)](https://csdc-cecd.ca/fr/)
-  [![CAPP](./partners/capp_logo.png)](https://www.capp.ulaval.ca/)
+:::div{className="ContentPage-logos-grid"}
+[![CLESSN](./partners/clessn_logo.png)](https://www.clessn.com/index.html) [![CRDIP](./partners/crdip_logo.png)](https://www.democratie.chaire.ulaval.ca/index.php?pid=924) [![CECD](./partners/cecd_logo.png)](https://csdc-cecd.ca/fr/) [![CAPP](./partners/capp_logo.png)](https://www.capp.ulaval.ca/) [![FoDEM](./partners/fodem_logo.png)](https://www.fodem.ca/) [![GRCP](./partners/grcp_logo.png)](https://www.grcp.ulaval.ca/) [![CRCIS](./partners/crcis_logo.png)](https://immigration-securite.chaire.ulaval.ca/fr/)
 :::
-:::figure
-  [![FoDEM](./partners/fodem_logo.png)](https://www.fodem.ca/)
-  [![GRCP](./partners/grcp_logo.png)](https://www.grcp.ulaval.ca/)
-:::figcaption
-  [![CRCIS](./partners/crcis_logo.png)](https://immigration-securite.chaire.ulaval.ca/fr/)
-:::
-
----
 
 ## Collaborateurs
 
-:::figure
-  [![Synopis](./partners/synopsis_logo.png)](https://synopsis.marketing/)
-  [![lg2](./partners/lg2_logo.png)](https://lg2.com/)
-:::figcaption
-  [![Unicorn](./partners/unicorn_logo.png)](https://unicornpowered.com/)
-  [![Tact](./partners/tact_logo.png)](https://www.tactconseil.ca/)
-:::
-:::figure
-  [![Infoscope](./partners/infoscope_logo.png)](https://www.infoscope.ca/)
-:::figcaption
+:::div{className="ContentPage-logos-grid"}
+[![Synopsis](./partners/synopsis_logo.png)](https://synopsis.marketing/) [![lg2](./partners/lg2_logo.png)](https://lg2.com/) [![Unicorn](./partners/unicorn_logo.png)](https://unicornpowered.com/) [![Tact](./partners/tact_logo.png)](https://www.tactconseil.ca/) [![Infoscope](./partners/infoscope_logo.png)](https://www.infoscope.ca/)
 :::`,
       title: 'Partenaires',
     },

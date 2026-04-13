@@ -15,8 +15,12 @@ const ArticlePage = lazy(() => import('../ArticlePage/ArticlePage'));
 const HomePage = lazy(() => import('../Home/Home'));
 const CategoryPage = lazy(() =>  import('../CategoryPage/CategoryPage'));
 const ContentPage = lazy(() =>  import('../ContentPage/ContentPage'));
+const AboutPage = lazy(() => import('../AboutPage/AboutPage'));
+const ContactPage = lazy(() => import('../ContactPage/ContactPage'));
+const PartnersPage = lazy(() => import('../PartnersPage/PartnersPage'));
+const MethodologyPage = lazy(() => import('../MethodologyPage/MethodologyPage'));
 
-const contentPages = [Page.ABOUT, Page.CONTACT, Page.PARTNERS, Page.METHODOLOGY, Page.CONDITIONS, Page.PRIVACY];
+const contentPages = [Page.CONDITIONS, Page.PRIVACY];
 
 const App = (): ReactElement => {
   useEffect(() => {
@@ -48,14 +52,19 @@ const App = (): ReactElement => {
             </Suspense>}
           />
         </Route>
+        <Route path={`${t(Page.ABOUT)}`}        element={<Suspense fallback={<LoadingPage />}><AboutPage /></Suspense>} />
+        <Route path={`${t(Page.CONTACT)}`}      element={<Suspense fallback={<LoadingPage />}><ContactPage /></Suspense>} />
+        <Route path={`${t(Page.PARTNERS)}`}     element={<Suspense fallback={<LoadingPage />}><PartnersPage /></Suspense>} />
+        <Route path={`${t(Page.METHODOLOGY)}`}  element={<Suspense fallback={<LoadingPage />}><MethodologyPage /></Suspense>} />
         {contentPages.map((page) => (
           <Route
+            key={page}
             path={`${t(page)}`}
-            element={<Suspense fallback={<LoadingPage />}
-          >
-            <ContentPage contentSlug={page} />
-          </Suspense>}/>)
-        )}
+            element={<Suspense fallback={<LoadingPage />}>
+              <ContentPage contentSlug={page} />
+            </Suspense>}
+          />
+        ))}
       </Routes>
     </BrowserRouter>
   )
