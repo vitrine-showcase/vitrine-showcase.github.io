@@ -17,13 +17,15 @@ import './CategoryPage.scss';
 interface CategoryProps {}
 
 const CategoryPage: FunctionComponent<CategoryProps> = () => (
-    <ArticlesContextConsumer>
-        {({ currentCategory }) => currentCategory ? (
-          <SitePage className={`CategoryPage ${currentCategory}`}>
-            <section className="CategoryPage-header section-inner">
-              <CategoryHeader category={currentCategory} />
-            </section>
-            {currentCategory === Category.MEDIA && (<>
+  <ArticlesContextConsumer>
+    {({ currentCategory }) =>
+      currentCategory ? (
+        <SitePage className={`CategoryPage ${currentCategory}`}>
+          <section className="CategoryPage-header section-inner">
+            <CategoryHeader category={currentCategory} />
+          </section>
+          {currentCategory === Category.MEDIA && (
+            <>
               <MediaTicker />
               <section className="CategoryPage-module section-outer">
                 <div className="section-inner">
@@ -37,16 +39,18 @@ const CategoryPage: FunctionComponent<CategoryProps> = () => (
               </section>
               <section className="CategoryPage-module section-outer">
                 <div className="section-inner">
-                  <ConstellationModule />
+                  <CouverturePartisModule />
                 </div>
               </section>
               <section className="CategoryPage-module section-outer">
                 <div className="section-inner">
-                  <CouverturePartisModule />
+                  <ConstellationModule />
                 </div>
               </section>
-            </>)}
-            {currentCategory === Category.AUTHORITIES && (<>
+            </>
+          )}
+          {currentCategory === Category.AUTHORITIES && (
+            <>
               <section className="CategoryPage-module section-outer">
                 <div className="section-inner">
                   <ParoleEnChambre />
@@ -57,16 +61,21 @@ const CategoryPage: FunctionComponent<CategoryProps> = () => (
                   <PartisModule />
                 </div>
               </section>
-            </>)}
-            {currentCategory === Category.PUBLIC_OPINION && (
-              <section className="CategoryPage-module section-outer">
-                <div className="section-inner">
-                  <EnjuModule />
-                </div>
-              </section>
-            )}
-        </SitePage>) : <></>}
-      </ArticlesContextConsumer>
+            </>
+          )}
+          {currentCategory === Category.PUBLIC_OPINION && (
+            <section className="CategoryPage-module section-outer">
+              <div className="section-inner">
+                <EnjuModule />
+              </div>
+            </section>
+          )}
+        </SitePage>
+      ) : (
+        <></>
+      )
+    }
+  </ArticlesContextConsumer>
 );
 
 export default memo(CategoryPage);

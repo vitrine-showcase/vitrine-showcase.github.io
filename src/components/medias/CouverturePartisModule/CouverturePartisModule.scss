@@ -58,6 +58,14 @@
 
   // ── Tabs ────────────────────────────────────────────────────────────────────
 
+  &-tabGroup {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 6px;
+  }
+
   &-tabs {
     background: $white;
     border: 1px solid $black;
@@ -76,7 +84,9 @@
     font-weight: 600;
     letter-spacing: 0.01em;
     padding: 0.35em 0.9em;
-    transition: background 0.2s, color 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s;
     white-space: nowrap;
 
     &.is-active {
@@ -101,7 +111,7 @@
     padding: responsive-gap(0.35) responsive-gap(1);
 
     &-neg {
-      color: #D71920;
+      color: #d71920;
       font-size: responsive-size(9, 10);
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -109,7 +119,7 @@
     }
 
     &-pos {
-      color: #24B03E;
+      color: #24b03e;
       font-size: responsive-size(9, 10);
       font-weight: 700;
       letter-spacing: 0.06em;
@@ -117,13 +127,15 @@
     }
 
     &-bar {
-      background: linear-gradient(to right, #D71920, #ABABAB, #24B03E);
+      background: linear-gradient(to right, #d71920, #ababab, #24b03e);
       border-radius: 3px;
       height: 5px;
       width: 60px;
     }
 
-    &-sep { flex: 1; }
+    &-sep {
+      flex: 1;
+    }
 
     &-hint {
       color: $grey;
@@ -163,9 +175,41 @@
   padding: responsive-gap(0.25) responsive-gap(1);
 }
 
-.CouvPartis-colhead-sov   { grid-column: 2 / 4; }
-.CouvPartis-colhead-tone  { grid-column: 4; }
-.CouvPartis-colhead-spark { grid-column: 5; }
+.CouvPartis-colhead-sov {
+  grid-column: 2 / 4;
+}
+.CouvPartis-colhead-tone {
+  grid-column: 4;
+}
+.CouvPartis-colhead-spark {
+  grid-column: 5;
+}
+
+.CouvPartis-rangeBtn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  color: $grey;
+  cursor: pointer;
+  font-family: $family-primary;
+  font-size: responsive-size(9, 11);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.15rem 0.35rem;
+  transition:
+    color 0.4s ease-in-out,
+    border-color 0.4s ease-in-out;
+  white-space: nowrap;
+
+  &:hover {
+    color: $black;
+  }
+
+  &.is-active {
+    border-color: $black;
+    color: $black;
+  }
+}
 
 // ── Party list ────────────────────────────────────────────────────────────────
 
@@ -284,7 +328,7 @@
   }
 
   &-tonebar {
-    background: linear-gradient(to right, #D71920 0%, #ABABAB 50%, #24B03E 100%);
+    background: linear-gradient(to right, #d71920 0%, #ababab 50%, #24b03e 100%);
     border-radius: 4px;
     height: 8px;
     position: relative;
