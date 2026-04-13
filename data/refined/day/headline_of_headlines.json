@@ -1,0 +1,10 @@
+[
+  {
+    "country_id": "CA",
+    "date_utc": "2026-04-10T12:00:00Z",
+    "main_issue_text_fr": "Économie et travail",
+    "title": "Données en cours de chargement depuis les raffineurs AWS",
+    "text": "Ce module sera alimenté par headline_of_headlines.json généré par le raffineur radar-headline-of-headlines.R.",
+    "salient_urls": []
+  }
+]

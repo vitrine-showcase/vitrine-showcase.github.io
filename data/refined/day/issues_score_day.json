@@ -1,0 +1,19 @@
+[
+  {
+    "date_utc": "2026-04-10T12:00:00Z",
+    "date_montreal_tz": "2026-04-10T08:00:00",
+    "pass": "day",
+    "economy_and_labour": 0.182,
+    "rights_liberties_minorities_discrimination": 0.094,
+    "health_and_social_services": 0.137,
+    "public_lands_and_agriculture": 0.041,
+    "immigration": 0.118,
+    "education": 0.055,
+    "environment_and_energy": 0.076,
+    "law_and_crime": 0.103,
+    "international_affairs_and_defense": 0.089,
+    "technology": 0.047,
+    "governments_and_governance": 0.142,
+    "culture_and_nationalism": 0.036
+  }
+]

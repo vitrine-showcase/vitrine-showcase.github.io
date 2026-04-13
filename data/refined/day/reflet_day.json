@@ -1,0 +1,32 @@
+[
+  {
+    "date_utc": "2026-04-10T12:00:00Z",
+    "pass": "day",
+    "issue": "economy_and_labour",
+    "summary": [
+      "L'économie domine la couverture avec des manchettes centrées sur l'inflation et les tensions commerciales.",
+      "Les médias mettent en relief les effets des tarifs douaniers sur les travailleurs québécois.",
+      "Le débat budgétaire fédéral capte une part importante de l'attention éditoriale."
+    ]
+  },
+  {
+    "date_utc": "2026-04-10T12:00:00Z",
+    "pass": "day",
+    "issue": "governments_and_governance",
+    "summary": [
+      "La gouvernance fédérale fait l'objet d'une couverture soutenue dans les médias nationaux.",
+      "Les questions de transparence et de reddition de comptes occupent les éditorialistes.",
+      "Les relations fédérales-provinciales continuent d'alimenter le cycle d'information."
+    ]
+  },
+  {
+    "date_utc": "2026-04-10T12:00:00Z",
+    "pass": "day",
+    "issue": "health_and_social_services",
+    "summary": [
+      "La santé demeure un enjeu persistant avec des manchettes sur les délais d'attente.",
+      "Le personnel soignant et les conditions de travail dans le réseau de la santé sont évoqués.",
+      "Les réformes du système public de santé restent dans l'agenda médiatique."
+    ]
+  }
+]

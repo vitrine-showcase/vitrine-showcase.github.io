@@ -1,0 +1,6 @@
+[
+  { "party": "CAQ",  "date_utc": "2026-04-10T12:00:00Z", "pass": "day", "weighted_mentions": 0.34, "weighted_tone": 0.01 },
+  { "party": "PLQ",  "date_utc": "2026-04-10T12:00:00Z", "pass": "day", "weighted_mentions": 0.22, "weighted_tone": -0.02 },
+  { "party": "QS",   "date_utc": "2026-04-10T12:00:00Z", "pass": "day", "weighted_mentions": 0.18, "weighted_tone": 0.03 },
+  { "party": "PQ",   "date_utc": "2026-04-10T12:00:00Z", "pass": "day", "weighted_mentions": 0.12, "weighted_tone": 0.00 }
+]
