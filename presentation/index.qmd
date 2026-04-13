@@ -1,0 +1,217 @@
+---
+title: "La Vitrine"
+subtitle: "Données et démocratie en temps réel"
+date: "Avril 2026"
+format:
+  revealjs:
+    theme: [default, vitrine-theme.scss]
+    slide-number: "c/t"
+    transition: fade
+    transition-speed: fast
+    background-transition: fade
+    width: 1280
+    height: 720
+    margin: 0.06
+    controls: false
+    progress: true
+    hash: true
+    history: false
+    center: false
+    auto-stretch: false
+    include-in-header: fonts.html
+---
+
+## {.accent}
+
+::: eyebrow
+01 — CONTEXTE
+:::
+
+## Titre de section
+
+---
+
+## Mise en contexte
+
+::: eyebrow
+PRÉSENTATION DU PROJET
+:::
+
+### La Vitrine démocratique
+
+Plateforme de visualisation des données politiques canadiennes et québécoises, produite par le CLESSN (Université Laval).
+
+- Les médias couvrent l'actualité **6× par jour** via le pipeline `aws-refiners`
+- Les données sont raffinées, scorées et présentées en temps réel
+- Trois sections : **Citoyens**, **Décideurs**, **Médias**
+
+---
+
+## Couverture médiatique
+
+::: eyebrow
+SECTION MÉDIAS — MODULE PRINCIPAL
+:::
+
+::: {.bento .cols-1-2}
+::: {.card .beige}
+::: stat-number
+6×
+:::
+::: stat-label
+Par jour
+:::
+::: stat-context
+Collecte automatisée de manchettes par le pipeline aws-refiners
+:::
+:::
+
+::: {.card}
+### Médias suivis
+
+Le module [`MediaTreemap`]{.tag} agrège la couverture par outlet et par thème. Chaque cellule représente le score de saillance d'un sujet dans l'espace médiatique.
+
+Les données sont rafraîchies toutes les **5 minutes** à partir du fichier `media-treemap.json`.
+:::
+:::
+
+---
+
+## Architecture des données
+
+::: eyebrow
+PIPELINE — AWS-REFINERS
+:::
+
+::: {.bento .cols-3}
+::: {.card .beige}
+::: stat-number
+1
+:::
+::: stat-label
+Collecte
+:::
+::: card-body
+Scraping de manchettes en R via Lambda
+:::
+:::
+
+::: {.card .yellow}
+::: stat-number
+2
+:::
+::: stat-label
+Raffinage
+:::
+::: card-body
+Calcul des scores de saillance dans Athena
+:::
+:::
+
+::: {.card}
+::: stat-number
+3
+:::
+::: stat-label
+Diffusion
+:::
+::: card-body
+Fichiers JSON versés dans S3 et exposés publiquement
+:::
+:::
+:::
+
+---
+
+## {.dark}
+
+::: eyebrow
+MODULES — DÉCIDEURS
+:::
+
+### La santé des partis politiques
+
+Le module `MomentumSection` visualise le score des partis fédéraux et provinciaux sur 30 jours. Chaque parti est représenté par un halo lumineux proportionnel à son score du jour.
+
+---
+
+::: columns-vitrine
+::: {.col}
+::: eyebrow
+CITOYENS — ENJEUX
+:::
+
+### Les enjeux qui dominent
+
+Le module `IssuesSection` présente les thèmes les plus couverts dans l'espace médiatique via un bento grid interactif. Les scores sont normalisés entre 0 et 1.
+
+- Santé
+- Économie
+- Environnement
+- Justice
+:::
+
+::: {.col}
+::: {.placeholder}
+Visualisation bento grid
+:::
+:::
+:::
+
+---
+
+::: pullquote
+La couverture médiatique n'est pas un miroir de la réalité — c'est une construction sociale mesurable.
+:::
+
+::: pullquote-source
+Architecture narrative — vitrine-maquette
+:::
+
+---
+
+## Prochaines étapes
+
+::: eyebrow
+FEUILLE DE ROUTE
+:::
+
+::: {.bento .cols-2}
+::: {.card .beige}
+**Module `RefletSection`**
+
+Résumé éditorial généré par LLM à partir des données raffinées du jour. Intégration via `reflet_day.json`.
+:::
+
+::: {.card}
+**Module `HeroSection`**
+
+La manchette des manchettes — un seul sujet, dominant toute la journée, mis en valeur en tête de page.
+:::
+
+::: {.card}
+**Parole en chambre**
+
+Transcriptions des débats parlementaires scorées et alignées avec la couverture médiatique.
+:::
+
+::: {.card .dark}
+**Constellation**
+
+Visualisation réseau des liens entre médias, partis et thèmes sur une fenêtre glissante de 7 jours.
+:::
+:::
+
+---
+
+## {.accent}
+
+::: eyebrow
+FIN DE PRÉSENTATION
+:::
+
+## [vitrine-showcase.github.io]{.closing-url}
+
+::: meta
+CLESSN — Université Laval · Données ouvertes · Démocratie
+:::
