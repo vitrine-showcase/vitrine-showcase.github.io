@@ -22,7 +22,7 @@ const ContactPage = (): ReactElement => {
             1030 Avenue des Sciences Humaines<br />
             Québec (QC) G1V 0A6<br />
             <br />
-            <a href="mailto:info@capp.ulaval.ca">info@capp.ulaval.ca</a>
+            <a href="mailto:capp.ulaval@gmail.com">capp.ulaval@gmail.com</a>
           </div>
         </div>
       </section>

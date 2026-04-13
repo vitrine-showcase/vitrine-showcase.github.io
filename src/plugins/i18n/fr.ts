@@ -67,6 +67,10 @@ export default {
       heading: 'Éthique et transparence',
       text: 'La CLESSN détient les autorisations éthiques les plus strictes. Les données sont collectées et entreposées au Québec, dans les serveurs de l\'Université Laval. Aucune donnée personnelle n\'est utilisée pour les indices de saillance médiatique ou parlementaire.',
     },
+    download: {
+      heading: 'Documentation complète',
+      label: 'Télécharger la méthodologie',
+    },
   },
   AppLanguage: {
     current: {

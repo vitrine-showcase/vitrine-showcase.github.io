@@ -48,6 +48,19 @@ const MethodologyPage = (): ReactElement => {
           <p className="InfoPage-text">{t('ethics.text')}</p>
         </div>
       </section>
+
+      <section className="InfoPage-section section-outer">
+        <div className="section-inner">
+          <h2 className="InfoPage-section-heading has-font-secondary">{t('download.heading')}</h2>
+          <a
+            className="Button"
+            href="/metho.pdf"
+            download="methodologie-vitrine-democratique.pdf"
+          >
+            {t('download.label')}
+          </a>
+        </div>
+      </section>
     </InfoPage>
   );
 };
