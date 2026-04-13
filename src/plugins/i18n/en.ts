@@ -6,12 +6,12 @@ export default {
   About: {
     eyebrow: 'CAPP · Université Laval',
     title: 'La Vitrine Démocratique',
-    description: 'The Vitrine measures what really occupies the public space — and shows it to you as it is.',
+    description: 'The Vitrine measures what really occupies the public space and shows it to you as it is.',
     mission: {
       heading: 'Why the Vitrine exists',
-      p1: 'We live in an era of informational abundance that paradoxically impoverishes what we share in common. Algorithms optimize for engagement — for what makes us react, not necessarily for what matters.',
-      p2: 'What we have lost is the common world: the set of facts, issues and concerns that allow a society to debate, choose, and govern itself. The Vitrine Démocratique is a response to this problem — an anchor: here is what really occupies the public space today, rigorously measured, without algorithmic filtering.',
-      quote: 'The Vitrine Démocratique is the news as it exists in the public space — not as the algorithm chose it for you.',
+      p1: 'We live in an era of informational abundance that paradoxically impoverishes what we share in common. Algorithms optimize for engagement, meaning for what makes us react, not necessarily for what matters.',
+      p2: 'What we have lost is the common world, namely the set of facts, issues and concerns that allow a society to debate, choose, and govern itself. The Vitrine Démocratique constitutes a response to this problem and a rigorous anchor. It makes visible what really occupies the public space today, measured without algorithmic filtering.',
+      quote: 'The Vitrine Démocratique is the news as it exists in the public space. Not as the algorithm chose it for you.',
     },
     institution: {
       heading: 'The institution',

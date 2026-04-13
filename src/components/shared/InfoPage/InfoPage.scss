@@ -17,7 +17,7 @@
   &-eyebrow {
     color: $grey;
     display: block;
-    font-size: responsive-size(10, 13);
+    font-size: responsive-size(11, 14);
     letter-spacing: 0.14em;
     margin-bottom: 0.5em;
     text-transform: uppercase;
@@ -52,7 +52,7 @@
     &-heading {
       color: $black;
       font-family: $family-secondary;
-      font-size: responsive-size(10, 13);
+      font-size: responsive-size(11, 14);
       font-weight: 400;
       letter-spacing: 0.14em;
       margin-bottom: responsive-gap(0.75);
@@ -128,7 +128,7 @@
   &-member-role {
     color: $grey;
     font-family: $family-secondary;
-    font-size: responsive-size(9, 10);
+    font-size: responsive-size(9, 12);
     letter-spacing: 0.08em;
     margin: 0.1em 0 0;
     text-transform: uppercase;
@@ -172,7 +172,7 @@
       height: responsive-size(36, 52);
       object-fit: contain;
       opacity: 0.6;
-      transition: filter 0.3s ease, opacity 0.3s ease;
+      transition: filter 0.4s ease-in-out, opacity 0.4s ease-in-out;
       width: auto;
 
       &:hover {

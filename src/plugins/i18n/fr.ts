@@ -9,12 +9,12 @@ export default {
   About: {
     eyebrow: 'CAPP · Université Laval',
     title: 'La Vitrine Démocratique',
-    description: 'La Vitrine mesure ce qui occupe vraiment l\'espace public — et te le montre tel quel.',
+    description: 'La Vitrine mesure ce qui occupe vraiment l\'espace public et te le montre tel quel.',
     mission: {
       heading: 'Pourquoi la Vitrine existe',
-      p1: 'Nous vivons dans une époque d\'abondance informationnelle qui produit, paradoxalement, un appauvrissement de ce que nous avons en commun. Les algorithmes optimisent pour l\'engagement — c\'est-à-dire pour ce qui nous fait réagir, pas nécessairement pour ce qui compte.',
-      p2: 'Ce que nous avons perdu, c\'est le monde commun : l\'ensemble de faits, d\'enjeux et de préoccupations qui font qu\'une société peut débattre, choisir, se gouverner. La Vitrine Démocratique est une réponse à ce problème — un point d\'ancrage : voici ce qui occupe réellement l\'espace public aujourd\'hui, mesuré rigoureusement, sans filtre algorithmique.',
-      quote: 'La Vitrine Démocratique, c\'est l\'actualité telle qu\'elle existe dans l\'espace public — pas telle que l\'algorithme l\'a choisie pour toi.',
+      p1: 'Nous vivons dans une époque d\'abondance informationnelle qui produit, paradoxalement, un appauvrissement de ce que nous avons en commun. Les algorithmes optimisent pour l\'engagement, c\'est-à-dire pour ce qui nous fait réagir, pas nécessairement pour ce qui compte.',
+      p2: 'Ce que nous avons perdu, c\'est le monde commun, soit l\'ensemble de faits, d\'enjeux et de préoccupations qui font qu\'une société peut débattre, choisir, se gouverner. La Vitrine Démocratique constitue une réponse à ce problème et un point d\'ancrage rigoureux. Elle rend visible ce qui occupe réellement l\'espace public, mesuré sans filtre algorithmique.',
+      quote: 'La Vitrine Démocratique, c\'est l\'actualité telle qu\'elle existe dans l\'espace public. Pas telle que l\'algorithme l\'a choisie pour toi.',
     },
     institution: {
       heading: 'L\'institution',
