@@ -1,0 +1,34 @@
+@import '../../../assets/styles/variables.module';
+
+.ContentPage {
+  .section-inner {
+    padding: responsive-gap(3) responsive-gap(1); // Page-level top/bottom padding
+  }
+
+  &-title {
+    font-size: responsive-size(48, 94); // Standard H1 size
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: responsive-gap(2); // Large margin after title
+    text-transform: none; // No uppercase for main page titles
+  }
+
+  // Markdown pages customization
+  &-partners {
+    img {
+      max-width: 250px; // Standardized partner logo size
+      height: auto;
+      object-fit: contain;
+      margin-right: responsive-gap(1);
+      margin-bottom: responsive-gap(1);
+      filter: grayscale(1);
+      opacity: 0.8;
+      transition: opacity 0.4s ease, filter 0.4s ease;
+
+      &:hover {
+        filter: grayscale(0);
+        opacity: 1;
+      }
+    }
+  }
+}

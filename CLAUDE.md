@@ -1,0 +1,96 @@
+# vitrine-showcase.github.io -- CLAUDE.md
+
+## Project purpose
+
+This is the self-contained repository for **La Vitrine** -- a media-focused data showcase produced by CLESSN (Universite Laval). It contains both the source code and the deployment configuration. The site is hosted for free on **GitHub Pages** -- no AWS infrastructure is involved.
+
+The site focuses on the **MEDIA** data module, displaying media coverage visualizations based on static JSON data snapshots.
+
+## Start the dev server
+
+```bash
+yarn install   # if node_modules missing
+yarn start     # dev server on http://localhost:3000
+```
+
+## Build for production
+
+```bash
+yarn build     # builds into build/ using .env.production
+               # postbuild copies index.html to 404.html for SPA routing
+```
+
+## Deployment
+
+Deployment is fully automated via GitHub Actions:
+- **Push to `main`** triggers `.github/workflows/deploy.yml`
+- The workflow builds the app, includes the `presentation/` folder, and deploys to GitHub Pages
+- The site is served at `https://vitrine-showcase.github.io/`
+- **No AWS credentials, no S3, no CloudFront** -- zero cost
+
+To enable GitHub Pages (one-time setup):
+- Go to repo Settings > Pages > Source: set to "GitHub Actions"
+
+## Design language
+
+- **Background:** White (`#fff`) -- no dark mode
+- **Fonts:** `Superpose` (body), `Superdot` (headings/accents) -- licensed, see `src/assets/styles/fonts/EULA_Web-License_Julien-Hebert.pdf`
+- **Color palette:** Defined in `src/assets/styles/variables.module.scss`
+  - accent2 (yellow `#feec20`) / accent2-dark (`#d2be17`) = MEDIA category color
+- **Design principles:** Edward Tufte data density, bento grids, Scrollytelling -- see `llm_context/vision_design_maquette.md`
+
+## Architecture
+
+```
+src/
+  components/
+    shared/        -- nav, footer, buttons, reusable UI (App, Home, MainNavbar, etc.)
+    citoyens/      -- Citoyens section modules (EnjuModule)
+    decideurs/     -- Decideurs section modules (PartisModule, ParoleEnChambre)
+    medias/        -- Medias section modules (MediaTreemap, UneDesUnes, ConstellationModule, CouverturePartisModule)
+  api/             -- Axios clients (chartClient, blogClient) -- currently inactive (no API URLs configured)
+  context/         -- React context providers (DataContext, ArticlesContext) -- gracefully degrade without APIs
+  assets/styles/   -- SCSS variables, fonts, global styles
+  plugins/i18n/    -- FR/EN translations (fr.ts, en.ts)
+public/
+  data/            -- Static JSON data files (media-treemap, ticker, headlines, parties, etc.)
+  logos/           -- Canadian political party logos
+presentation/      -- RevealJS slide deck (served at /presentation/)
+```
+
+## Data
+
+All data modules consume static JSON files from `public/data/`:
+- `media-treemap.json` -- issue treemap with scores, velocity, headlines
+- `headline-of-headlines.json` -- dominant headline story
+- `ticker.json` -- scrolling headline ticker
+- `constellation-graph.json` -- topic co-occurrence graph
+- `top20.json` -- top 20 rankings
+- `parole-en-chambre.json` -- parliamentary debates
+- `refined/day/federal_parties_score_day.json` -- federal party mentions
+- `refined/day/provincial_parties_score_day.json` -- provincial party mentions
+
+These are static snapshots. To update them, replace the JSON files in `public/data/` and push to `main`.
+
+## Feature flags (.env.production)
+
+| Flag | Value | Effect |
+|------|-------|--------|
+| `REACT_APP_ENABLE_MEDIA_TREEMAP` | `"true"` | Shows MediaTreemap for MEDIA section |
+| `REACT_APP_ENABLE_PROTOTYPE_PLACEHOLDERS` | `"true"` | Shows placeholder cards for disabled modules |
+
+## External APIs (inactive)
+
+The codebase contains two Axios clients (`chartClient`, `blogClient`) that previously connected to AWS-hosted APIs. These are no longer configured:
+- `chartClient` -- orphaned, no component renders its data
+- `blogClient` -- used for article pages, but gracefully degrades (empty content) without a URL
+
+Both have `.catch()` handlers so they fail silently.
+
+## Context references
+
+- `llm_context/vision_design_maquette.md` -- visual design principles
+- `llm_context/architecture_narrative_accueil.md` -- homepage narrative flow
+- `llm_context/architecture_donnees_raffineurs.md` -- data pipeline overview (historical)
+- `llm_context/best_practices_ui_ux.md` -- UI/UX guidelines
+- `design_language.md` -- design language specification

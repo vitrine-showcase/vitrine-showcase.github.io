@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <link id="favicon" rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link id="apple-touch-icon" rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link id="manifest" rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <meta
+      data-rh="content"
+      name="description"
+      content="La Vitrine démocratique regroupe les applications Web de la CLESSN à l'Université Laval. Elle offre aux Québécois.es une vision d'ensemble unique quant à l'état de leur société par le biais des piliers démocratiques que forment les décideurs, les médias et les citoyens."
+    />
+    <meta
+      data-rh="content"
+      property="og:title"
+      content="Vitrine démocratique"
+    />
+    <meta
+      data-rh="content"
+      property="og:url"
+      content="https://vitrinedemocratique.ca"
+    />
+    <meta
+      data-rh="content"
+      property="og:image"
+      content="%PUBLIC_URL%/share-fr.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      data-rh="content"
+      property="og:description"
+      content="La Vitrine démocratique regroupe les applications Web de la CLESSN à l'Université Laval. Elle offre aux Québécois.es une vision d'ensemble unique quant à l'état de leur société par le biais des piliers démocratiques que forment les décideurs, les médias et les citoyens."
+    />
+
+    <script>
+      function switchIcon(usesDarkMode) {
+        const favicon = document.getElementById('favicon');
+        const manifest = document.getElementById('manifest');
+        const appleIcon = document.getElementById('apple-touch-icon');
+
+        if (usesDarkMode) { 
+          favicon.href = '%PUBLIC_URL%/dark-favicon.ico';
+          manifest.href= '%PUBLIC_URL%/dark-manifest.json';
+          appleIcon.href = '%PUBLIC_URL%/dark-apple-touch-icon.png';
+        } else {
+          favicon.href = '%PUBLIC_URL%/favicon.ico';
+          manifest.href = '%PUBLIC_URL%/manifest.json';
+          appleIcon.href = '%PUBLIC_URL%/apple-touch-icon.png';
+        }
+      }
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener( "change", (e) => switchIcon(e.matches));
+      switchIcon(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    </script>
+
+    <title>Vitrine démocratique</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

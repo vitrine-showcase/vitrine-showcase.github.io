@@ -1,0 +1,11 @@
+@import '../../../assets/styles/variables.module';
+
+.SiteBrand {
+  display: flex;
+  height: 100%;
+
+  > svg {
+    height: 100%;
+    width: auto;
+  }
+}
