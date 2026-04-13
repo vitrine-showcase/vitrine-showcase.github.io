@@ -19,16 +19,9 @@ import crcis from '../../../assets/images/partners/crcis_logo.png';
 import crcisEN from '../../../assets/images/partners/crcis_logoEN.png';
 import obvia from '../../../assets/images/partners/obvia_logo.png';
 import obviaEN from '../../../assets/images/partners/obvia_logoEN.png';
-import synopsis from '../../../assets/images/partners/synopsis_logo.png';
-import synopsisEN from '../../../assets/images/partners/synopsis_logoEN.png';
-import lg2 from '../../../assets/images/partners/lg2_logo.png';
-import lg2EN from '../../../assets/images/partners/lg2_logoEN.png';
-import unicorn from '../../../assets/images/partners/unicorn_logo.png';
-import unicornEN from '../../../assets/images/partners/unicorn_logoEN.png';
-import tact from '../../../assets/images/partners/tact_logo.png';
-import tactEN from '../../../assets/images/partners/tact_logoEN.png';
 import infoscope from '../../../assets/images/partners/infoscope_logo.png';
 import infoscopeEN from '../../../assets/images/partners/infoscope_logoEN.png';
+import glpl from '../../../assets/images/partners/glpl_logo.png';
 
 type Logo = { src: string; srcEN: string; alt: string; href: string };
 
@@ -44,11 +37,8 @@ const ACADEMIC: Logo[] = [
 ];
 
 const INDUSTRY: Logo[] = [
-  { src: synopsis,  srcEN: synopsisEN,  alt: 'Synopsis',  href: 'https://synopsis.marketing/' },
-  { src: lg2,       srcEN: lg2EN,       alt: 'lg2',       href: 'https://lg2.com/' },
-  { src: unicorn,   srcEN: unicornEN,   alt: 'Unicorn',   href: 'https://unicornpowered.com/' },
-  { src: tact,      srcEN: tactEN,      alt: 'Tact',      href: 'https://www.tactconseil.ca/' },
-  { src: infoscope, srcEN: infoscopeEN, alt: 'Infoscope', href: 'https://www.infoscope.ca/' },
+  { src: infoscope, srcEN: infoscopeEN, alt: 'Infoscope',                        href: 'https://www.infoscope.ca/' },
+  { src: glpl,      srcEN: glpl,        alt: 'Les productions gros lait et petit lait', href: '#' },
 ];
 
 type LogoGroupProps = { logos: Logo[]; isEN: boolean };

@@ -10,7 +10,7 @@ const MethodologyPage = (): ReactElement => {
     <InfoPage
       slug="methodology"
       eyebrow={t('eyebrow')}
-      title={t('title')}
+      title={<span className="has-font-secondary">Méthodologie</span>}
       description={t('description')}
     >
       <section className="InfoPage-section section-outer">

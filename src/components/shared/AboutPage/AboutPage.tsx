@@ -82,7 +82,7 @@ const AboutPage = (): ReactElement => {
     <InfoPage
       slug="about"
       eyebrow={t('eyebrow')}
-      title={t('title')}
+      title={<>La <span className="has-font-secondary">Vitrine</span> Démocratique</>}
       description={t('description')}
     >
 
