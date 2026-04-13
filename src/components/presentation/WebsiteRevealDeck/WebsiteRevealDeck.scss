@@ -15,6 +15,8 @@
 
   background: var(--deck-bg);
   color: var(--deck-color);
+  font-family: $family-secondary;
+  font-weight: 700;
   min-height: calc(100vh - var(--vh-offset, 0));
   overflow: hidden;
   position: relative;
@@ -135,8 +137,9 @@
 
 // ── Typography ────────────────────────────────────────────────────────────────
 .Deck-heroTitle {
+  font-family: $family-secondary;
   font-size: responsive-size(48, 96);
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 0.92;
   text-align: center;
@@ -321,14 +324,38 @@
   }
 
   // Positions — scattered on/near the edges of the glass panel
-  &--1 { left: 14%;  top: -7px; }
-  &--2 { right: 20%; top: -7px; }
-  &--3 { right: -7px; top: 18%; }
-  &--4 { right: -7px; bottom: 22%; }
-  &--5 { bottom: -7px; right: 16%; }
-  &--6 { bottom: -7px; left: 22%; }
-  &--7 { left: -7px;  bottom: 28%; }
-  &--8 { left: -7px;  top: 24%; }
+  &--1 {
+    left: 14%;
+    top: -7px;
+  }
+  &--2 {
+    right: 20%;
+    top: -7px;
+  }
+  &--3 {
+    right: -7px;
+    top: 18%;
+  }
+  &--4 {
+    right: -7px;
+    bottom: 22%;
+  }
+  &--5 {
+    bottom: -7px;
+    right: 16%;
+  }
+  &--6 {
+    bottom: -7px;
+    left: 22%;
+  }
+  &--7 {
+    left: -7px;
+    bottom: 28%;
+  }
+  &--8 {
+    left: -7px;
+    top: 24%;
+  }
 }
 
 // Tagline — appears below the vitrine with a delayed GSAP fade-in
@@ -421,8 +448,9 @@
 
 .Deck-productTitle {
   color: $white;
+  font-family: $family-secondary;
   font-size: responsive-size(24, 32);
-  font-weight: 300;
+  font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1;
   margin-top: responsive-gap(0.5);

@@ -132,7 +132,11 @@ const WebsiteRevealDeck = (): ReactElement => {
       // Standard staggered reveal for all [data-reveal] nodes
       const nodes = slideRef.current!.querySelectorAll<HTMLElement>('[data-reveal]');
       if (nodes.length) {
-        gsap.fromTo(nodes, { opacity: 0, y: 30 }, { duration: 0.4, ease: 'power3.out', opacity: 1, stagger: 0.08, y: 0 });
+        gsap.fromTo(
+          nodes,
+          { opacity: 0, y: 30 },
+          { duration: 0.4, ease: 'power3.out', opacity: 1, stagger: 0.08, y: 0 },
+        );
       }
 
       // ── Logo slide: staged cinematic entrance ──────────────────────────────
@@ -291,14 +295,14 @@ const WebsiteRevealDeck = (): ReactElement => {
               <img
                 alt="Vote Compass logo"
                 className="Deck-fitImg"
-                src={`${process.env.PUBLIC_URL}/presentation/img/votecompass.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/vote_compass.png`}
               />
             </div>
             <div className="Deck-imgFrame" data-reveal>
               <img
                 alt="Portrait"
                 className="Deck-fitImg"
-                src={`${process.env.PUBLIC_URL}/presentation/img/votecompass-person.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/portrait_vote_compass.png`}
               />
             </div>
           </div>
@@ -315,32 +319,32 @@ const WebsiteRevealDeck = (): ReactElement => {
               <img
                 alt="Member 1"
                 className="Deck-portrait"
-                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-1.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn_member_1.png`}
               />
               <img
                 alt="Member 2"
                 className="Deck-portrait"
-                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-2.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn_member_2.png`}
               />
               <img
                 alt="Member 3"
                 className="Deck-portrait"
-                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-3.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn_member_3.png`}
               />
               <img
                 alt="Member 4"
                 className="Deck-portrait"
-                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-4.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn_member_4.png`}
               />
               <img
                 alt="Member 5"
                 className="Deck-portrait"
-                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-5.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn_member_5.png`}
               />
               <img
                 alt="Member 6"
                 className="Deck-portrait"
-                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-6.png`}
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn_member_6.png`}
               />
             </div>
           </div>
@@ -355,7 +359,7 @@ const WebsiteRevealDeck = (): ReactElement => {
                 <img
                   alt="Polimètre"
                   className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/polimetre.png`}
+                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_1.png`}
                 />
                 <span className="Deck-productLabel">Polimetre</span>
               </div>
@@ -363,7 +367,7 @@ const WebsiteRevealDeck = (): ReactElement => {
                 <img
                   alt="Radar+"
                   className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/radar.png`}
+                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_2.svg`}
                 />
                 <span className="Deck-productLabel">Radar+</span>
               </div>
@@ -371,7 +375,7 @@ const WebsiteRevealDeck = (): ReactElement => {
                 <img
                   alt="Datagotchi"
                   className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/datagotchi.png`}
+                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_3.png`}
                 />
                 <span className="Deck-productLabel">Datagotchi</span>
               </div>
@@ -379,7 +383,7 @@ const WebsiteRevealDeck = (): ReactElement => {
                 <img
                   alt="Agora+"
                   className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/agora.png`}
+                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_4.png`}
                 />
                 <span className="Deck-productLabel">Agora+</span>
               </div>
@@ -441,7 +445,6 @@ const WebsiteRevealDeck = (): ReactElement => {
   return (
     <div className={`WebsiteRevealDeck theme-${activeSlide.theme}`} onWheel={handleWheel} ref={deckRef}>
       <div className={`Deck-shell${isFirstSlide ? ' Deck-shell--immersive' : ''}`}>
-
         {/* Header + progress — hidden on the cinematic first slide */}
         {!isFirstSlide && (
           <>
