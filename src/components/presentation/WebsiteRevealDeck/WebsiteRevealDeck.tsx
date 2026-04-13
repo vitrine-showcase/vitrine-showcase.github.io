@@ -100,21 +100,21 @@ const WebsiteRevealDeck = (): ReactElement => {
     if (!deckRef.current) return undefined;
 
     const ctx = gsap.context(() => {
-      // Breathing scale
+      // Very subtle breathing — "un tout petit peu"
       gsap.to('.Deck-logoImg', {
-        duration: 3,
+        duration: 4,
         ease: 'sine.inOut',
         repeat: -1,
-        scale: 1.06,
+        scale: 1.025,
         yoyo: true,
       });
 
-      // Shine sweep
+      // Shine sweep — occasional, like real glass catching light
       gsap.to('.Deck-shine', {
-        duration: 2.4,
+        duration: 2.8,
         ease: 'power2.inOut',
         repeat: -1,
-        repeatDelay: 1.2,
+        repeatDelay: 2.5,
         xPercent: 220,
       });
     }, deckRef);
@@ -128,17 +128,54 @@ const WebsiteRevealDeck = (): ReactElement => {
   useEffect(() => {
     if (!slideRef.current) return undefined;
 
-    const nodes = slideRef.current.querySelectorAll<HTMLElement>('[data-reveal]');
-    if (!nodes.length) return undefined;
-
     const ctx = gsap.context(() => {
-      gsap.fromTo(nodes, { opacity: 0, y: 30 }, { duration: 0.4, ease: 'power3.out', opacity: 1, stagger: 0.08, y: 0 });
+      // Standard staggered reveal for all [data-reveal] nodes
+      const nodes = slideRef.current!.querySelectorAll<HTMLElement>('[data-reveal]');
+      if (nodes.length) {
+        gsap.fromTo(nodes, { opacity: 0, y: 30 }, { duration: 0.4, ease: 'power3.out', opacity: 1, stagger: 0.08, y: 0 });
+      }
+
+      // ── Logo slide: staged cinematic entrance ──────────────────────────────
+      if (activeSlide.id === 'logo') {
+        const vitrine = slideRef.current!.querySelector<HTMLElement>('.Deck-vitrine');
+        const tagline = slideRef.current!.querySelector<HTMLElement>('.Deck-tagline');
+
+        // Vitrine emerges from black — delayed slightly after Framer Motion fade-in
+        if (vitrine) {
+          gsap.fromTo(
+            vitrine,
+            { opacity: 0, scale: 0.93 },
+            { delay: 0.25, duration: 1, ease: 'power3.out', opacity: 1, scale: 1 },
+          );
+        }
+
+        // Tagline fades in after vitrine is settled
+        if (tagline) {
+          gsap.fromTo(tagline, { opacity: 0 }, { delay: 1.5, duration: 0.8, ease: 'power2.out', opacity: 1 });
+        }
+
+        // Sparkles twinkle independently, each with its own rhythm
+        const sparkles = slideRef.current!.querySelectorAll<HTMLElement>('.Deck-sparkle');
+        sparkles.forEach((el, i) => {
+          gsap.set(el, { opacity: 0, scale: 0 });
+          const tl = gsap.timeline({
+            delay: 1.4 + i * 0.45,
+            repeat: -1,
+            repeatDelay: 1.6 + (i % 4) * 0.55,
+          });
+          tl.to(el, { duration: 0.28, ease: 'power2.out', opacity: 1, scale: 1 }).to(
+            el,
+            { duration: 0.28, ease: 'power2.in', opacity: 0, scale: 0 },
+            '+=0.55',
+          );
+        });
+      }
     }, slideRef);
 
     return () => {
       ctx.revert();
     };
-  }, [activeIndex]);
+  }, [activeIndex, activeSlide.id]);
 
   // ── GSAP: products stacking animation (slide 4) ────────────────────────────
   useEffect(() => {
@@ -220,14 +257,29 @@ const WebsiteRevealDeck = (): ReactElement => {
 
   const renderSlide = (): ReactElement => {
     switch (activeSlide.id) {
-      // ── Slide 1: Logo with breathing + shine ────────────────────────────────
+      // ── Slide 1: Cinematic vitrine reveal ───────────────────────────────────
       case 'logo':
         return (
-          <div className="Deck-layout Deck-layout--centered">
-            <div className="Deck-logoWrap" data-reveal>
-              <img alt="La Vitrine Démocratique" className="Deck-logoImg" src={logoWhite} />
-              <span className="Deck-shine" aria-hidden="true" />
+          <div className="Deck-layout Deck-layout--centered Deck-layout--column">
+            <div className="Deck-vitrine">
+              <span className="Deck-vitrineHalo" aria-hidden="true" />
+              <div className="Deck-vitrinePanel">
+                <div className="Deck-logoWrap">
+                  <img alt="La Vitrine Démocratique" className="Deck-logoImg" src={logoWhite} />
+                  <span className="Deck-shine" aria-hidden="true" />
+                </div>
+              </div>
+              {/* Sparkles on the glass edges */}
+              <span className="Deck-sparkle Deck-sparkle--1" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--2" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--3" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--4" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--5" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--6" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--7" aria-hidden="true" />
+              <span className="Deck-sparkle Deck-sparkle--8" aria-hidden="true" />
             </div>
+            <p className="Deck-tagline">Prendre le pouls de ce qui compte.</p>
           </div>
         );
 
@@ -388,25 +440,29 @@ const WebsiteRevealDeck = (): ReactElement => {
 
   return (
     <div className={`WebsiteRevealDeck theme-${activeSlide.theme}`} onWheel={handleWheel} ref={deckRef}>
-      <div className="Deck-shell">
-        {/* Header — only show chapter + counter when there is a chapter */}
-        <header className="Deck-header">
-          <span className="Deck-brand">La Vitrine</span>
-          <span className="Deck-chapter">{activeSlide.chapter}</span>
-          <span className="Deck-counter">
-            {`${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`}
-          </span>
-        </header>
+      <div className={`Deck-shell${isFirstSlide ? ' Deck-shell--immersive' : ''}`}>
 
-        {/* Progress */}
-        <div className="Deck-progressTrack" aria-hidden="true">
-          <motion.span
-            animate={{ scaleX: (activeIndex + 1) / slides.length }}
-            className="Deck-progressFill"
-            initial={false}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-          />
-        </div>
+        {/* Header + progress — hidden on the cinematic first slide */}
+        {!isFirstSlide && (
+          <>
+            <header className="Deck-header">
+              <span className="Deck-brand">La Vitrine</span>
+              <span className="Deck-chapter">{activeSlide.chapter}</span>
+              <span className="Deck-counter">
+                {`${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`}
+              </span>
+            </header>
+
+            <div className="Deck-progressTrack" aria-hidden="true">
+              <motion.span
+                animate={{ scaleX: (activeIndex + 1) / slides.length }}
+                className="Deck-progressFill"
+                initial={false}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+              />
+            </div>
+          </>
+        )}
 
         {/* Slide */}
         <AnimatePresence exitBeforeEnter initial={false}>
@@ -423,19 +479,21 @@ const WebsiteRevealDeck = (): ReactElement => {
           </motion.section>
         </AnimatePresence>
 
-        {/* Footer */}
-        <footer className="Deck-footer">
-          <div />
-          <div />
-          <div className="Deck-controls">
-            <button disabled={isFirstSlide} onClick={goToPrevious} type="button">
-              Prev
-            </button>
-            <button disabled={isLastSlide} onClick={goToNext} type="button">
-              Next
-            </button>
-          </div>
-        </footer>
+        {/* Footer — hidden on the cinematic first slide */}
+        {!isFirstSlide && (
+          <footer className="Deck-footer">
+            <div />
+            <div />
+            <div className="Deck-controls">
+              <button disabled={isFirstSlide} onClick={goToPrevious} type="button">
+                Prev
+              </button>
+              <button disabled={isLastSlide} onClick={goToNext} type="button">
+                Next
+              </button>
+            </div>
+          </footer>
+        )}
       </div>
     </div>
   );

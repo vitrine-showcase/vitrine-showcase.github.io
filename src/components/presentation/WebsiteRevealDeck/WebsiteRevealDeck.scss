@@ -38,6 +38,11 @@
   padding: responsive-gap(0.75);
   position: relative;
   z-index: 1;
+
+  // Immersive: no padding, slide fills the full viewport (logo slide)
+  &--immersive {
+    padding: 0;
+  }
 }
 
 // ── Header / footer ──────────────────────────────────────────────────────────
@@ -187,7 +192,65 @@
 // SLIDE-SPECIFIC STYLES
 // ═════════════════════════════════════════════════════════════════════════════
 
-// ── Slide 1: Logo breathing + shine ───────────────────────────────────────────
+// ── Slide 1: Cinematic vitrine + logo ─────────────────────────────────────────
+
+// Outer container — sparkles are positioned relative to this
+.Deck-vitrine {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+// Ambient halo — very subtle warm glow behind the case (Apple product backlight feel)
+.Deck-vitrineHalo {
+  background: radial-gradient(ellipse at 50% 45%, #{rgba($yellow, 0.08)} 0%, transparent 58%);
+  bottom: -80px;
+  filter: blur(32px);
+  left: -60px;
+  pointer-events: none;
+  position: absolute;
+  right: -60px;
+  top: -80px;
+  z-index: 0;
+}
+
+// The glass display case
+.Deck-vitrinePanel {
+  background: linear-gradient(160deg, #{rgba($white, 0.04)} 0%, #{rgba($white, 0.01)} 100%);
+  border: 1px solid #{rgba($white, 0.14)};
+  border-radius: 1.5rem;
+  overflow: hidden;
+  padding: responsive-gap(1.5) responsive-gap(2.5);
+  position: relative;
+  z-index: 1;
+
+  // Top-edge glass highlight — light catching the upper rim
+  &::before {
+    background: linear-gradient(90deg, transparent, #{rgba($white, 0.45)}, transparent);
+    content: '';
+    height: 1px;
+    left: 18%;
+    position: absolute;
+    right: 18%;
+    top: 0;
+  }
+
+  // Subtle inner radiance from above (backlit display effect)
+  &::after {
+    background: radial-gradient(ellipse at 50% -5%, #{rgba($white, 0.06)} 0%, transparent 55%);
+    border-radius: inherit;
+    bottom: 0;
+    content: '';
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+// Logo image — breathing animation handled by GSAP
 .Deck-logoWrap {
   display: inline-block;
   overflow: hidden;
@@ -197,7 +260,7 @@
 .Deck-logoImg {
   display: block;
   height: auto;
-  max-width: min(28rem, 60vw);
+  max-width: min(28rem, 55vw);
   width: 100%;
 
   &--final {
@@ -205,13 +268,14 @@
   }
 }
 
+// Shine sweep across the glass surface
 .Deck-shine {
   background: linear-gradient(
     120deg,
     transparent 0%,
-    #{rgba($white, 0.25)} 45%,
-    #{rgba($white, 0.5)} 50%,
-    #{rgba($white, 0.25)} 55%,
+    #{rgba($white, 0.2)} 45%,
+    #{rgba($white, 0.45)} 50%,
+    #{rgba($white, 0.2)} 55%,
     transparent 100%
   );
   height: 200%;
@@ -220,6 +284,63 @@
   position: absolute;
   top: -50%;
   width: 60%;
+}
+
+// Sparkles — 4-pointed cross on the glass edges, animated independently by GSAP
+.Deck-sparkle {
+  height: 10px;
+  pointer-events: none;
+  position: absolute;
+  width: 10px;
+  z-index: 2;
+
+  &::before,
+  &::after {
+    background: $white;
+    border-radius: 999px;
+    content: '';
+    position: absolute;
+  }
+
+  // Vertical bar
+  &::before {
+    height: 100%;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 1.5px;
+  }
+
+  // Horizontal bar
+  &::after {
+    height: 1.5px;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+  }
+
+  // Positions — scattered on/near the edges of the glass panel
+  &--1 { left: 14%;  top: -7px; }
+  &--2 { right: 20%; top: -7px; }
+  &--3 { right: -7px; top: 18%; }
+  &--4 { right: -7px; bottom: 22%; }
+  &--5 { bottom: -7px; right: 16%; }
+  &--6 { bottom: -7px; left: 22%; }
+  &--7 { left: -7px;  bottom: 28%; }
+  &--8 { left: -7px;  top: 24%; }
+}
+
+// Tagline — appears below the vitrine with a delayed GSAP fade-in
+.Deck-tagline {
+  color: #{rgba($white, 0.3)};
+  font-family: $family-secondary;
+  font-size: responsive-size(11, 14);
+  letter-spacing: 0.22em;
+  margin-top: responsive-gap(1.5);
+  opacity: 0; // GSAP animates this in
+  text-align: center;
+  text-transform: uppercase;
 }
 
 // ── Slide 2: Vote Compass split ───────────────────────────────────────────────
