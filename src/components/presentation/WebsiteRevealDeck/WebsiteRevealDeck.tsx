@@ -18,7 +18,11 @@ const slides: SlideMeta[] = [
   { id: 'logo', chapter: '', theme: 'obsidian' },
   { id: 'votecompass', chapter: 'Vote Compass', theme: 'porcelain' },
   { id: 'clessn', chapter: 'CLESSN', theme: 'porcelain' },
-  { id: 'products', chapter: 'Parcours', theme: 'obsidian' },
+  { id: 'product1', chapter: 'Parcours', theme: 'obsidian' },
+  { id: 'product2', chapter: 'Parcours', theme: 'obsidian' },
+  { id: 'product3', chapter: 'Parcours', theme: 'obsidian' },
+  { id: 'product4', chapter: 'Parcours', theme: 'obsidian' },
+  { id: 'vitrine', chapter: 'Parcours', theme: 'obsidian' },
   { id: 'circles', chapter: 'Sections', theme: 'porcelain' },
   { id: 'closing', chapter: '', theme: 'obsidian' },
 ];
@@ -181,65 +185,6 @@ const WebsiteRevealDeck = (): ReactElement => {
     };
   }, [activeIndex, activeSlide.id]);
 
-  // ── GSAP: products stacking animation (slide 4) ────────────────────────────
-  useEffect(() => {
-    if (activeSlide.id !== 'products' || !slideRef.current) return undefined;
-
-    const cards = slideRef.current.querySelectorAll<HTMLElement>('.Deck-productCard');
-    if (!cards.length) return undefined;
-
-    const ctx = gsap.context(() => {
-      // Start all cards stacked and hidden
-      gsap.set(cards, { opacity: 0, scale: 0.88, y: 60, rotation: 0 });
-
-      const tl = gsap.timeline({ delay: 0.3 });
-
-      // Reveal cards one by one, each stacking with slight rotation
-      cards.forEach((card, i) => {
-        const rotation = (i - 2) * 3; // fan out slightly
-        tl.to(
-          card,
-          {
-            duration: 0.4,
-            ease: 'back.out(1.4)',
-            opacity: 1,
-            rotation,
-            scale: 1,
-            y: i * -8,
-          },
-          i * 0.35,
-        );
-      });
-
-      // After all cards shown, collapse them into the final "Vitrine" card
-      tl.to(
-        cards,
-        {
-          duration: 0.4,
-          ease: 'power3.inOut',
-          opacity: 0,
-          rotation: 0,
-          scale: 0.7,
-          stagger: 0.04,
-          y: 0,
-        },
-        '+=0.6',
-      );
-
-      // Reveal the merged Vitrine card
-      tl.fromTo(
-        '.Deck-productFinal',
-        { opacity: 0, scale: 0.9 },
-        { duration: 0.4, ease: 'power3.out', opacity: 1, scale: 1 },
-        '-=0.15',
-      );
-    }, slideRef);
-
-    return () => {
-      ctx.revert();
-    };
-  }, [activeSlide.id]);
-
   // Wheel debounce cleanup
   useEffect(
     () => () => {
@@ -350,52 +295,66 @@ const WebsiteRevealDeck = (): ReactElement => {
           </div>
         );
 
-      // ── Slide 4: Products stacking → Vitrine ───────────────────────────────
-      case 'products':
+      // ── Slides 4-7: One product per slide ────────────────────────────────
+      case 'product1':
         return (
           <div className="Deck-layout Deck-layout--centered">
-            <div className="Deck-productStack">
-              <div className="Deck-productCard">
-                <img
-                  alt="Polimètre"
-                  className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_1.png`}
-                />
-                <span className="Deck-productLabel">Polimetre</span>
-              </div>
-              <div className="Deck-productCard">
-                <img
-                  alt="Radar+"
-                  className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_2.svg`}
-                />
-                <span className="Deck-productLabel">Radar+</span>
-              </div>
-              <div className="Deck-productCard">
-                <img
-                  alt="Datagotchi"
-                  className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_3.png`}
-                />
-                <span className="Deck-productLabel">Datagotchi</span>
-              </div>
-              <div className="Deck-productCard">
-                <img
-                  alt="Agora+"
-                  className="Deck-fitImg"
-                  src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_4.png`}
-                />
-                <span className="Deck-productLabel">Agora+</span>
-              </div>
-              <div className="Deck-productFinal">
-                <img alt="La Vitrine Démocratique" className="Deck-logoImg Deck-logoImg--final" src={logoWhite} />
-                <h2 className="Deck-productTitle">Vitrine Democratique</h2>
-              </div>
+            <img
+              alt="Polimètre"
+              className="Deck-productImg"
+              data-reveal
+              src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_1.png`}
+            />
+          </div>
+        );
+
+      case 'product2':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <img
+              alt="Radar+"
+              className="Deck-productImg"
+              data-reveal
+              src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_2.svg`}
+            />
+          </div>
+        );
+
+      case 'product3':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <img
+              alt="Datagotchi"
+              className="Deck-productImg"
+              data-reveal
+              src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_3.png`}
+            />
+          </div>
+        );
+
+      case 'product4':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <img
+              alt="Agora+"
+              className="Deck-productImg"
+              data-reveal
+              src={`${process.env.PUBLIC_URL}/presentation/img/project_stack_4.png`}
+            />
+          </div>
+        );
+
+      // ── Slide 8: Vitrine reveal ─────────────────────────────────────────────
+      case 'vitrine':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <div className="Deck-logoWrap" data-reveal>
+              <img alt="La Vitrine Démocratique" className="Deck-logoImg Deck-logoImg--final" src={logoWhite} />
             </div>
           </div>
         );
 
-      // ── Slide 5: Venn diagram circles ───────────────────────────────────────
+      // ── Slide 9: Venn diagram circles ───────────────────────────────────────
       case 'circles':
         return (
           <div className="Deck-layout Deck-layout--centered">
