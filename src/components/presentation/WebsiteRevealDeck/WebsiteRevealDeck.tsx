@@ -1,0 +1,444 @@
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { gsap } from 'gsap';
+import logoWhite from '../../shared/SiteBrand/logo-white.png';
+import './WebsiteRevealDeck.scss';
+
+// ── Slide definitions ─────────────────────────────────────────────────────────
+
+type SlideTheme = 'obsidian' | 'porcelain';
+
+type SlideMeta = {
+  id: string;
+  chapter: string;
+  theme: SlideTheme;
+};
+
+const slides: SlideMeta[] = [
+  { id: 'logo', chapter: '', theme: 'obsidian' },
+  { id: 'votecompass', chapter: 'Vote Compass', theme: 'porcelain' },
+  { id: 'clessn', chapter: 'CLESSN', theme: 'porcelain' },
+  { id: 'products', chapter: 'Parcours', theme: 'obsidian' },
+  { id: 'circles', chapter: 'Sections', theme: 'porcelain' },
+  { id: 'closing', chapter: '', theme: 'obsidian' },
+];
+
+// ── Venn diagram geometry (mirrors site VennDiagram) ──────────────────────────
+
+const R = 95;
+const MEDIAS = { cx: 150, cy: 115 };
+const CITOYENS = { cx: 77, cy: 228 };
+const DECIDEURS = { cx: 223, cy: 228 };
+
+// ── Framer Motion transition ──────────────────────────────────────────────────
+
+const slideTransition = {
+  duration: 0.4,
+  ease: [0.22, 1, 0.36, 1],
+};
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
+const WebsiteRevealDeck = (): ReactElement => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const deckRef = useRef<HTMLDivElement | null>(null);
+  const slideRef = useRef<HTMLElement | null>(null);
+  const wheelTimeoutRef = useRef<number | null>(null);
+
+  const activeSlide = slides[activeIndex];
+  const isFirstSlide = activeIndex === 0;
+  const isLastSlide = activeIndex === slides.length - 1;
+
+  const goToPrevious = useCallback((): void => {
+    setActiveIndex((i) => Math.max(0, i - 1));
+  }, []);
+
+  const goToNext = useCallback((): void => {
+    setActiveIndex((i) => Math.min(slides.length - 1, i + 1));
+  }, []);
+
+  // Lock body scroll and set title
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    const prevTitle = document.title;
+    document.body.style.overflow = 'hidden';
+    document.title = 'La Vitrine — Presentation';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      document.title = prevTitle;
+    };
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        goToNext();
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+        e.preventDefault();
+        goToPrevious();
+      }
+      if (e.key === 'Home') {
+        e.preventDefault();
+        setActiveIndex(0);
+      }
+      if (e.key === 'End') {
+        e.preventDefault();
+        setActiveIndex(slides.length - 1);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [goToNext, goToPrevious]);
+
+  // ── GSAP: logo breathing + shine (slide 1) ─────────────────────────────────
+  useEffect(() => {
+    if (!deckRef.current) return undefined;
+
+    const ctx = gsap.context(() => {
+      // Breathing scale
+      gsap.to('.Deck-logoImg', {
+        duration: 3,
+        ease: 'sine.inOut',
+        repeat: -1,
+        scale: 1.06,
+        yoyo: true,
+      });
+
+      // Shine sweep
+      gsap.to('.Deck-shine', {
+        duration: 2.4,
+        ease: 'power2.inOut',
+        repeat: -1,
+        repeatDelay: 1.2,
+        xPercent: 220,
+      });
+    }, deckRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
+
+  // ── GSAP: per-slide element reveals ─────────────────────────────────────────
+  useEffect(() => {
+    if (!slideRef.current) return undefined;
+
+    const nodes = slideRef.current.querySelectorAll<HTMLElement>('[data-reveal]');
+    if (!nodes.length) return undefined;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(nodes, { opacity: 0, y: 30 }, { duration: 0.4, ease: 'power3.out', opacity: 1, stagger: 0.08, y: 0 });
+    }, slideRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, [activeIndex]);
+
+  // ── GSAP: products stacking animation (slide 4) ────────────────────────────
+  useEffect(() => {
+    if (activeSlide.id !== 'products' || !slideRef.current) return undefined;
+
+    const cards = slideRef.current.querySelectorAll<HTMLElement>('.Deck-productCard');
+    if (!cards.length) return undefined;
+
+    const ctx = gsap.context(() => {
+      // Start all cards stacked and hidden
+      gsap.set(cards, { opacity: 0, scale: 0.88, y: 60, rotation: 0 });
+
+      const tl = gsap.timeline({ delay: 0.3 });
+
+      // Reveal cards one by one, each stacking with slight rotation
+      cards.forEach((card, i) => {
+        const rotation = (i - 2) * 3; // fan out slightly
+        tl.to(
+          card,
+          {
+            duration: 0.4,
+            ease: 'back.out(1.4)',
+            opacity: 1,
+            rotation,
+            scale: 1,
+            y: i * -8,
+          },
+          i * 0.35,
+        );
+      });
+
+      // After all cards shown, collapse them into the final "Vitrine" card
+      tl.to(
+        cards,
+        {
+          duration: 0.4,
+          ease: 'power3.inOut',
+          opacity: 0,
+          rotation: 0,
+          scale: 0.7,
+          stagger: 0.04,
+          y: 0,
+        },
+        '+=0.6',
+      );
+
+      // Reveal the merged Vitrine card
+      tl.fromTo(
+        '.Deck-productFinal',
+        { opacity: 0, scale: 0.9 },
+        { duration: 0.4, ease: 'power3.out', opacity: 1, scale: 1 },
+        '-=0.15',
+      );
+    }, slideRef);
+
+    return () => {
+      ctx.revert();
+    };
+  }, [activeSlide.id]);
+
+  // Wheel debounce cleanup
+  useEffect(
+    () => () => {
+      if (wheelTimeoutRef.current) window.clearTimeout(wheelTimeoutRef.current);
+    },
+    [],
+  );
+
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>): void => {
+    if (Math.abs(e.deltaY) < 28 || wheelTimeoutRef.current) return;
+    if (e.deltaY > 0) goToNext();
+    else goToPrevious();
+    wheelTimeoutRef.current = window.setTimeout(() => {
+      wheelTimeoutRef.current = null;
+    }, 900);
+  };
+
+  // ── Slide renderers ─────────────────────────────────────────────────────────
+
+  const renderSlide = (): ReactElement => {
+    switch (activeSlide.id) {
+      // ── Slide 1: Logo with breathing + shine ────────────────────────────────
+      case 'logo':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <div className="Deck-logoWrap" data-reveal>
+              <img alt="La Vitrine Démocratique" className="Deck-logoImg" src={logoWhite} />
+              <span className="Deck-shine" aria-hidden="true" />
+            </div>
+          </div>
+        );
+
+      // ── Slide 2: Vote Compass ───────────────────────────────────────────────
+      case 'votecompass':
+        return (
+          <div className="Deck-layout Deck-layout--split">
+            <div className="Deck-imgFrame" data-reveal>
+              <img
+                alt="Vote Compass logo"
+                className="Deck-fitImg"
+                src={`${process.env.PUBLIC_URL}/presentation/img/votecompass.png`}
+              />
+            </div>
+            <div className="Deck-imgFrame" data-reveal>
+              <img
+                alt="Portrait"
+                className="Deck-fitImg"
+                src={`${process.env.PUBLIC_URL}/presentation/img/votecompass-person.png`}
+              />
+            </div>
+          </div>
+        );
+
+      // ── Slide 3: CLESSN team ────────────────────────────────────────────────
+      case 'clessn':
+        return (
+          <div className="Deck-layout Deck-layout--stacked">
+            <h1 className="Deck-heroTitle Deck-heroTitle--dark" data-reveal>
+              CLESSN!
+            </h1>
+            <div className="Deck-portraitGrid" data-reveal>
+              <img
+                alt="Member 1"
+                className="Deck-portrait"
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-1.png`}
+              />
+              <img
+                alt="Member 2"
+                className="Deck-portrait"
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-2.png`}
+              />
+              <img
+                alt="Member 3"
+                className="Deck-portrait"
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-3.png`}
+              />
+              <img
+                alt="Member 4"
+                className="Deck-portrait"
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-4.png`}
+              />
+              <img
+                alt="Member 5"
+                className="Deck-portrait"
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-5.png`}
+              />
+              <img
+                alt="Member 6"
+                className="Deck-portrait"
+                src={`${process.env.PUBLIC_URL}/presentation/img/clessn-6.png`}
+              />
+            </div>
+          </div>
+        );
+
+      // ── Slide 4: Products stacking → Vitrine ───────────────────────────────
+      case 'products':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <div className="Deck-productStack">
+              <div className="Deck-productCard">
+                <img
+                  alt="Polimètre"
+                  className="Deck-fitImg"
+                  src={`${process.env.PUBLIC_URL}/presentation/img/polimetre.png`}
+                />
+                <span className="Deck-productLabel">Polimetre</span>
+              </div>
+              <div className="Deck-productCard">
+                <img
+                  alt="Radar+"
+                  className="Deck-fitImg"
+                  src={`${process.env.PUBLIC_URL}/presentation/img/radar.png`}
+                />
+                <span className="Deck-productLabel">Radar+</span>
+              </div>
+              <div className="Deck-productCard">
+                <img
+                  alt="Datagotchi"
+                  className="Deck-fitImg"
+                  src={`${process.env.PUBLIC_URL}/presentation/img/datagotchi.png`}
+                />
+                <span className="Deck-productLabel">Datagotchi</span>
+              </div>
+              <div className="Deck-productCard">
+                <img
+                  alt="Agora+"
+                  className="Deck-fitImg"
+                  src={`${process.env.PUBLIC_URL}/presentation/img/agora.png`}
+                />
+                <span className="Deck-productLabel">Agora+</span>
+              </div>
+              <div className="Deck-productFinal">
+                <img alt="La Vitrine Démocratique" className="Deck-logoImg Deck-logoImg--final" src={logoWhite} />
+                <h2 className="Deck-productTitle">Vitrine Democratique</h2>
+              </div>
+            </div>
+          </div>
+        );
+
+      // ── Slide 5: Venn diagram circles ───────────────────────────────────────
+      case 'circles':
+        return (
+          <div className="Deck-layout Deck-layout--centered">
+            <div className="Deck-venn" data-reveal>
+              <svg viewBox="-25 0 350 355" xmlns="http://www.w3.org/2000/svg">
+                <g className="Deck-vennItem Deck-vennItem--medias">
+                  <circle cx={MEDIAS.cx} cy={MEDIAS.cy} r={R} className="Deck-vennCircle" />
+                  <text x={MEDIAS.cx} y={MEDIAS.cy + 4} textAnchor="middle" className="Deck-vennLabel">
+                    Medias
+                  </text>
+                </g>
+                <g className="Deck-vennItem Deck-vennItem--citoyens">
+                  <circle cx={CITOYENS.cx} cy={CITOYENS.cy} r={R} className="Deck-vennCircle" />
+                  <text x={CITOYENS.cx} y={CITOYENS.cy + 4} textAnchor="middle" className="Deck-vennLabel">
+                    Citoyens
+                  </text>
+                </g>
+                <g className="Deck-vennItem Deck-vennItem--decideurs">
+                  <circle cx={DECIDEURS.cx} cy={DECIDEURS.cy} r={R} className="Deck-vennCircle" />
+                  <text x={DECIDEURS.cx} y={DECIDEURS.cy + 4} textAnchor="middle" className="Deck-vennLabel">
+                    Decideurs
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </div>
+        );
+
+      // ── Slide 6: Closing ────────────────────────────────────────────────────
+      case 'closing':
+      default:
+        return (
+          <div className="Deck-layout Deck-layout--centered Deck-layout--column">
+            <p className="Deck-eyebrow" data-reveal>
+              Visit
+            </p>
+            <h1 className="Deck-heroTitle" data-reveal>
+              vitrine-showcase.github.io
+            </h1>
+          </div>
+        );
+    }
+  };
+
+  // ── Render ──────────────────────────────────────────────────────────────────
+
+  return (
+    <div className={`WebsiteRevealDeck theme-${activeSlide.theme}`} onWheel={handleWheel} ref={deckRef}>
+      <div className="Deck-shell">
+        {/* Header — only show chapter + counter when there is a chapter */}
+        <header className="Deck-header">
+          <span className="Deck-brand">La Vitrine</span>
+          <span className="Deck-chapter">{activeSlide.chapter}</span>
+          <span className="Deck-counter">
+            {`${String(activeIndex + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`}
+          </span>
+        </header>
+
+        {/* Progress */}
+        <div className="Deck-progressTrack" aria-hidden="true">
+          <motion.span
+            animate={{ scaleX: (activeIndex + 1) / slides.length }}
+            className="Deck-progressFill"
+            initial={false}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+          />
+        </div>
+
+        {/* Slide */}
+        <AnimatePresence exitBeforeEnter initial={false}>
+          <motion.section
+            animate={{ opacity: 1, y: 0 }}
+            className={`Deck-slide Deck-slide--${activeSlide.id}`}
+            exit={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 20 }}
+            key={activeSlide.id}
+            ref={slideRef}
+            transition={slideTransition}
+          >
+            {renderSlide()}
+          </motion.section>
+        </AnimatePresence>
+
+        {/* Footer */}
+        <footer className="Deck-footer">
+          <div />
+          <div />
+          <div className="Deck-controls">
+            <button disabled={isFirstSlide} onClick={goToPrevious} type="button">
+              Prev
+            </button>
+            <button disabled={isLastSlide} onClick={goToNext} type="button">
+              Next
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default WebsiteRevealDeck;
