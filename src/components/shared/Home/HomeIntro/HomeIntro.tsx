@@ -3,7 +3,7 @@ import { Trans } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import Category from '../../../../models/Category';
 import useOnScreen from '../../../../hooks/useOnScreen';
-import VennDiagram from './VennDiagram';
+import DivergenceGraph from './DivergenceGraph';
 import './HomeIntro.scss';
 
 const HomeIntro = (): ReactElement => {
@@ -36,7 +36,7 @@ const HomeIntro = (): ReactElement => {
           </p>
         </div>
         <div className="HomeIntro-diagram">
-          <VennDiagram />
+          <DivergenceGraph />
         </div>
       </div>
     </div>

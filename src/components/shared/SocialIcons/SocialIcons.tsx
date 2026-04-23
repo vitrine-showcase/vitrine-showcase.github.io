@@ -36,7 +36,7 @@ export const SocialIcons = (): ReactElement => {
     <nav className="SocialIcons">
       {
         socialNetworks.map(({href, title, svg: { path }}) => (
-          <a key={title} href={href} title={title} target={title} aria-label={title}>
+          <a aria-label={title} key={title} href={href} title={title} target={title}>
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d={path} />
             </svg>
