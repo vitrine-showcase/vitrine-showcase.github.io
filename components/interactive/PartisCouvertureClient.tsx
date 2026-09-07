@@ -15,6 +15,7 @@ import { ShareButton } from "@/components/interactive/ShareButton";
 import { InfoTip } from "@/components/interactive/InfoTip";
 import { DoomGame } from "@/components/interactive/DoomGame";
 import { LigneTracklist, LigneTracklistTon } from "@/components/interactive/Tracklist";
+import { PochettePastille } from "@/components/interactive/PochettePastille";
 
 /** L'enjeu de reste : les phrases qui nomment un parti sans qu'aucun modèle CAP
  *  ne franchisse son seuil. Il EST sélectionnable — sans lui, cocher tous les
@@ -1207,12 +1208,23 @@ function Deck({
               <rect className="forme-parti" x="0" y="0" width="100" height="100" />
             </g>
             <circle className="cap-cercle" cx="50" cy="50" r="49.4" />
-            {/* Retiré le 2026-09-01 (« enlève le trou au centre de cette
-                pastille ») : le trou du spindle qui vivait ici, au-dessus du
-                sigle. Le sigle revient donc au centre géométrique du
-                capuchon (`y="50"`, comme avant son ajout) — même traitement
-                que `.trophee-repli`, le sigle seul sur l'aplat du parti. */}
-            <text className="cap-sigle" x="50" y="50" textAnchor="middle" dominantBaseline="central">
+            {/* LE TROU DU SPINDLE — REVENU le 2026-09-07, et cette fois pour
+                une raison qui tient : le capuchon d'un deck et l'étiquette
+                d'une pochette (`.pochette-pastille`) sont le MÊME objet, et
+                l'une est percée. Il avait été retiré le 2026-09-01 (« enlève
+                le trou au centre de cette pastille ») alors qu'aucune autre
+                pastille du site n'en portait ; depuis, toutes en portent un.
+                `r="6.5"` = 13 % du capuchon, la proportion exacte du trou
+                d'une pochette. */}
+            <circle className="cap-trou" cx="50" cy="50" r="6.5" />
+            {/* LE SIGLE AU-DESSUS DU TROU, et non plus au centre : c'est sa
+                place sur une pochette, où le bas de l'étiquette porte la
+                date. `y="42"` pose le bas des lettres à 42 % de la hauteur,
+                soit 1,5 unité au-dessus du trou — le même écart que sur
+                `.pochette-pastille-sigle` (`bottom: 58 %`, trou de 13 %).
+                Pas de `dominantBaseline` : la ligne de base par défaut est
+                exactement ce qu'on veut caler ici. */}
+            <text className="cap-sigle" x="50" y="42" textAnchor="middle">
               {row.label}
             </text>
           </svg>
@@ -2329,8 +2341,10 @@ function TropheeCouverture({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="pochette-image" src={entree.src} alt="" aria-hidden="true" />
         </picture>
-        <b className="pochette-sigle">{entree.sigle}</b>
-        {entree.jourCourt && <b className="pochette-date">{entree.jourCourt}</b>}
+        {/* L'ÉTIQUETTE DU DISQUE, au centre de l'illustration — la même que
+            celle du single pas encore pressé juste au-dessus
+            (`.trophee-etiquette-disque`), fond de papier en moins. */}
+        <PochettePastille sigle={entree.sigle} jourCourt={entree.jourCourt} couleur={entree.couleur} />
       </span>
     );
   }
@@ -2526,7 +2540,7 @@ function CarteTrophee({
         </span>
         {/* Le NOM du parti ne s'écrit plus ici depuis le 2026-09-07 : le
             sigle est déjà gravé sur la pochette elle-même
-            (`.pochette-sigle`/`.trophee-etiquette-sigle`), et le nom complet
+            (`.pochette-pastille-sigle`/`.trophee-etiquette-sigle`), et le nom complet
             reste accessible — `aria-label` du bouton, ci-dessus — sans qu'il
             faille le répéter à l'écran pour tout le monde. Le RANG, lui, a
             quitté la carte le 2026-09-01 : `<ol>` porte déjà l'ordre, et un
