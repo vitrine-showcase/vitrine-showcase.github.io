@@ -1,5 +1,11 @@
 [
   {
+    "pr": 765,
+    "date": "2026-09-07T18:55:34Z",
+    "note": "La page de la discothèque explique maintenant ce que chaque pochette mesure et comment son illustration est fabriquée.",
+    "version": "2.45.0-beta.1"
+  },
+  {
     "pr": 764,
     "date": "2026-09-07T18:24:15Z",
     "note": "Les pochettes des partis portent maintenant une véritable étiquette de disque en leur centre, nom et date compris, au lieu de deux bandeaux qui recouvraient l'illustration.",
