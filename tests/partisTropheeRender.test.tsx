@@ -190,7 +190,7 @@ describe("le disque d'or — la course n'est pas encore courue", () => {
     // Le lien précède le disque dans le DOM (flex-direction: column, donc dans
     // l'ordre visuel) : c'est la première chose qu'on croise, pas la dernière.
     const iLien = html.indexOf('class="trophee-voir-tout"');
-    const iDisque = html.indexOf('class="trophee-disque"');
+    const iDisque = html.indexOf('class="trophee-disque');
     expect(iLien).toBeGreaterThan(-1);
     expect(iDisque).toBeGreaterThan(iLien);
   });
@@ -250,8 +250,12 @@ describe("le disque d'or — couronné, avec une vraie pochette", () => {
     expect(html).toContain(`/pochettes/2026-08-27-${meneur.key}.png`);
   });
 
-  it("garde le sigle en légende par-dessus l'image, comme une couverture de la discothèque", () => {
-    expect(html).toMatch(/class="pochette-sigle">[^<]*<\/b>/);
+  it("grave le sigle ET la date sur l'étiquette du disque, par-dessus l'image", () => {
+    expect(html).toMatch(/class="pochette-pastille-sigle">[^<]*<\/b>/);
+    expect(html).toMatch(/class="pochette-pastille-date">27 août<\/b>/);
+    // L'étiquette porte la couleur du parti elle-même, sans l'attendre d'un
+    // ancêtre : c'est ce qui la rend posable sur n'importe quelle pochette.
+    expect(html).toContain('class="pochette-pastille" style="--party:');
   });
 });
 
