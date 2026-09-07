@@ -65,9 +65,14 @@ export default async function DiscothequePage() {
         <div className="fonds-header">
           <h1 className="fonds-title">La discothèque</h1>
           <p className="fonds-lead dek-with-cap">
-            Chaque jour, à 20h, la pochette de chaque parti est figée telle
-            qu’elle est à ce moment-là et rejoint le fonds. Ce qu’on lit ici a
-            été mesuré le jour même&nbsp;: ce n’est pas une reconstitution.
+            Chaque soir à 20h, chaque parti reçoit sa pochette du jour. Elle
+            porte quatre mesures prises ce jour-là&nbsp;: le temps passé à la
+            Une, la part du temps total, l’enjeu sur lequel les médias l’ont
+            couvert et le ton de cette couverture. L’illustration est générée
+            par intelligence artificielle, sous la direction artistique de
+            Mathieu Fortin (Anorak Studio). Elle figure cet enjeu, et rend le
+            temps de couverture par la densité des formes plutôt que par un
+            graphique.
           </p>
         </div>
 
