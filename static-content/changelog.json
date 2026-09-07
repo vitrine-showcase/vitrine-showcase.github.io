@@ -1,5 +1,11 @@
 [
   {
+    "pr": 742,
+    "date": "2026-09-07T19:07:21Z",
+    "note": "Le module « De quel parti parle-t-on dans les médias? » est désormais visible par tout le monde, ainsi que la Discothèque qui conserve ses pochettes quotidiennes.",
+    "version": "2.46.0-beta.0"
+  },
+  {
     "pr": 765,
     "date": "2026-09-07T18:55:34Z",
     "note": "La page de la discothèque explique maintenant ce que chaque pochette mesure et comment son illustration est fabriquée.",
