@@ -8738,8 +8738,7 @@
 
   /* La pochette garde ses quatre pistes : c'est elle qui porte les chiffres. */
   .deck-jog-media text { font-size: 5.4px; }
-  .pochette-sigle { font-size: 28px; }
-  .cap-sigle { font-size: 32px; }
+  .cap-sigle { font-size: 23px; }
 
 }
 
@@ -9235,27 +9234,12 @@
   width: 100%;
   height: 100%;
 }
-/* Même traitement que `.fonds-plaque-couverture` : le sigle en bas à gauche,
-   sur un voile — une illustration engendrée peut rester claire jusqu'en bas,
-   et un sigle sans fond s'y efface. */
-.trophee-disque .pochette-sigle {
-  position: absolute;
-  z-index: 2;
-  left: 6px;
-  bottom: 6px;
-  font-size: 14px;
-}
-.trophee-disque .pochette-art::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 44%;
-  background: linear-gradient(to bottom, rgba(28, 25, 23, 0) 0%, rgba(28, 25, 23, 0.55) 100%);
-  pointer-events: none;
-}
+/* LE SIGLE EN BAS À GAUCHE ET SON VOILE SOMBRE SONT PARTIS le 2026-09-07 :
+   l'illustration porte maintenant son étiquette de disque au centre
+   (`.pochette-pastille`), qui pose son propre fond opaque. Le dégradé n'avait
+   d'autre raison d'être que de rattraper un texte posé à nu sur une image
+   parfois claire — plus de texte à nu, plus de voile, et l'illustration
+   récupère ses 44 % inférieurs. */
 
 /* SANS IMAGE CONFIRMÉE, alors même que la course est courue : le sigle en
    texte sur l'aplat du parti, comme partout ailleurs sur le site où une
@@ -9329,17 +9313,24 @@
 .trophee-etiquette-disque {
   flex: none;
   position: relative;
-  /* 62 → 70 % le 2026-09-07 : le cercle se perdait dans trop de papier crème
-     autour de lui, surtout dans les coins du carré — un disque doit avoir de
-     la présence, pas flotter au milieu du vide. */
-  width: 70%;
+  /* EXACTEMENT LA PROPORTION DE `.pochette-pastille` : 46 % de la largeur de
+     la carte, écrit dans la même unité (`cqw`, d'après le conteneur déclaré
+     sur `.trophee-etiquette`) pour que les deux se comparent d'un coup d'œil
+     dans le code et ne dérivent plus l'une de l'autre.
+     ⚠️ PAS `width: 70%`, qui valait autre chose que ce qu'il disait : un
+     pourcentage se compte sur la boîte de contenu, or `.trophee-etiquette`
+     porte `padding: 8% 6%` — 70 % s'y lisaient 61,6 % de la carte. Une valeur
+     en `cqw` se compte toujours sur la carte entière, comme celle de la
+     pastille. */
+  width: 46cqw;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: var(--party, var(--ink-soft));
   box-sizing: border-box;
-  /* Un anneau clair près du bord, comme le vernis imprimé d'une vraie
-     étiquette — sans lui, le cercle se lisait comme une simple pastille. */
-  box-shadow: inset 0 0 0 clamp(1px, 3cqw, 3px) rgba(255, 255, 255, 0.22);
+  /* PLEIN LUI AUSSI (2026-09-07). Il portait le même anneau clair, et pour la
+     même raison — l'imitation d'un vernis imprimé. Il part avec l'autre : les
+     deux disques du module doivent se lire pareil, qu'ils annoncent un single
+     à paraître ou qu'ils couronnent un disque pressé. */
   /* ⚠️ DEUX CORRECTIFS D'AFFILÉE ONT RATÉ CE TROU (signalé trois fois).
      D'abord `top: 50%` sur le `::before` seul — vérifié géométriquement
      exact, mais le sigle restait plaqué tout en bas : la moitié haute du
@@ -9364,20 +9355,32 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 11%;
+  /* 13 % comme sur la pastille — le trou suit la même proportion que le reste,
+     sinon deux disques de même taille n'auraient pas le même percement. */
+  width: 13%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: var(--paper-deep);
-  box-shadow: 0 0 0 1px rgba(28, 25, 23, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(28, 25, 23, 0.22),
+    inset 0 0.5px 2px rgba(28, 25, 23, 0.5);
 }
+/* LE SIGLE AU-DESSUS DU TROU, à la place et à la taille qu'il a sur une vraie
+   pochette (`.pochette-pastille-sigle`). Il vivait près du bas (`bottom: 16 %`)
+   et trois fois plus gros (`19cqw`) : le disque était alors bien plus grand, et
+   le sigle y était seul. À 46 cqw, cette taille-là déborderait, et une position
+   basse ne correspondrait plus à rien — sur la pochette, le bas de l'étiquette
+   est la place de la DATE. Le disque à paraître n'en a pas encore : cette
+   moitié reste vide, et c'est juste — il n'y a rien à y écrire tant que le
+   disque n'est pas pressé. */
 .trophee-etiquette-sigle {
   position: absolute;
   left: 50%;
-  bottom: 16%;
+  bottom: 58%;
   transform: translateX(-50%);
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 900;
-  font-size: clamp(9px, 19cqw, 26px);
+  font-size: clamp(11px, 10cqw, 30px);
   letter-spacing: -0.01em;
   line-height: 1;
   color: var(--paper);
@@ -9389,8 +9392,9 @@
    le flux, se centre dans ce qui reste entre les deux, sans jamais se
    disputer la moitié de boîte avec un bloc de texte trop grand pour elle —
    voir le commentaire dans `PartisCouvertureClient.tsx`. Même famille que
-   le sigle sur le voile d'une vraie pochette (`.pochette-sigle`) : une
-   légende, pas un second sujet à égalité avec le disque. */
+   la date sur l'étiquette d'une vraie pochette
+   (`.pochette-pastille-date`) : une légende, pas un second sujet à égalité
+   avec le disque. */
 .trophee-etiquette-titre {
   position: absolute;
   top: 4%;
@@ -9527,32 +9531,13 @@
   perspective: 900px;
 }
 /* `.trophee-repli`/`.trophee-etiquette` se dimensionnent déjà eux-mêmes à
-   100 % de leur parent ; seul `.pochette-art` en a besoin ici. Le sigle et son
-   voile reprennent le même traitement que `.trophee-disque` — bas à gauche,
-   sur un dégradé — plutôt que le repli géométrique par défaut (centré, 34 px)
-   qui n'a pas de sens sur une VRAIE illustration. */
+   100 % de leur parent ; seul `.pochette-art` en a besoin ici. */
 .trophee-panel-art .pochette-art {
   width: 100%;
   height: 100%;
 }
-.trophee-panel-art .pochette-sigle {
-  position: absolute;
-  z-index: 2;
-  left: 7px;
-  bottom: 7px;
-  font-size: 16px;
-}
-.trophee-panel-art .pochette-art::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 44%;
-  background: linear-gradient(to bottom, rgba(28, 25, 23, 0) 0%, rgba(28, 25, 23, 0.55) 100%);
-  pointer-events: none;
-}
+/* Le sigle en bas à gauche et son voile sont partis d'ici aussi (2026-09-07) —
+   même raison que sur `.trophee-disque` : l'étiquette centrale les remplace. */
 
 /* LE DÉCLENCHEUR — la pochette ET son nom, un seul bouton : cliquer L'UN OU
    L'AUTRE retourne la carte. Même geste que `.fonds-plaque-declencheur` de
@@ -9618,6 +9603,33 @@
   transition: transform 480ms cubic-bezier(0.4, 0.15, 0.2, 1);
 }
 .flip-carte.retournee { transform: rotateY(180deg); }
+
+/* LA FACE CACHÉE EST RETIRÉE, PAS SEULEMENT « NON VISIBLE ».
+ *
+ * `backface-visibility: hidden` est posé sur `.flip-face` — et ça ne suffit
+ * pas. Un descendant promu dans sa propre couche de composition est composé
+ * indépendamment de son parent : le sigle du deck (`.cap-sigle`, un <text> SVG
+ * sur un capuchon en aplat) restait visible EN MIROIR une fois la carte
+ * retournée. Deux tentatives ont échoué à le corriger en étendant
+ * `backface-visibility` aux descendants — le compositeur passe outre.
+ *
+ * On cesse donc d'en dépendre : la face qui n'est pas tournée vers le lecteur
+ * est `visibility: hidden`, ce qu'aucune couche de composition ne peut
+ * contredire. La règle vaut pour les trois porteurs — deck, disque d'or,
+ * discothèque — qui partagent `.flip-carte`.
+ *
+ * LE DÉLAI DE 240 ms est la MOITIÉ de la rotation (480 ms) : la face bascule
+ * au moment où la carte est de profil, donc invisible. Sans lui, elle
+ * disparaîtrait pendant qu'on la regarde encore.
+ *
+ * Effet de bord souhaitable : la face cachée quitte aussi l'arbre
+ * d'accessibilité, au lieu que les deux y soient lues en même temps. */
+.flip-face--recto,
+.flip-face--verso {
+  transition: visibility 0s linear 240ms;
+}
+.flip-carte.retournee .flip-face--recto { visibility: hidden; }
+.flip-carte:not(.retournee) .flip-face--verso { visibility: hidden; }
 .flip-face {
   /* `position: absolute` calcule déjà `display: block` de lui-même sur un
      `<span>` — posé quand même en toutes lettres, pour ne plus jamais
@@ -9643,8 +9655,8 @@
 /* LE SIGLE À L'ENVERS SUR LES POCHETTES AVEC IMAGE.
    `backface-visibility: hidden` posé sur `.flip-face` cache bien la face
    tournée — mais PAS un descendant que le navigateur a promu dans sa propre
-   couche de composition. `.pochette-sigle` cumule les trois déclencheurs
-   habituels : `position: absolute`, un `z-index`, un `text-shadow`. Promu, il
+   couche de composition. `.pochette-pastille` cumule les trois déclencheurs
+   habituels : `position: absolute`, un `z-index`, une ombre portée. Promue, elle
    se rend indépendamment de sa face et reste visible, EN MIROIR, une fois la
    pochette retournée.
    D'où l'asymétrie signalée : les pochettes SANS image affichent leur sigle
@@ -9654,8 +9666,21 @@
    qui porte sa propre couche doit porter sa propre consigne de dos. */
 .flip-face .pochette-art,
 .flip-face .pochette-image,
-.flip-face .pochette-sigle,
-.flip-face .pochette-formes {
+.flip-face .pochette-pastille,
+.flip-face .pochette-formes,
+/* LE DISQUE AUSSI — c'est ce qui manquait. La règle ne couvrait que les
+   éléments de POCHETTE, alors que le deck montre un VINYLE : `.deck-face`,
+   son capuchon et le sigle gravé dessus (`.cap-sigle`, un <text> SVG).
+   Chacun est promu dans sa propre couche de composition, et
+   `backface-visibility` posé sur le parent ne descend pas jusque-là : le
+   sigle du parti restait donc visible EN MIROIR une fois la carte
+   retournée. Signalé à l'usage le 2026-09-06, après que #740 eut traité les
+   pochettes sans voir que le deck n'en est pas une. */
+.flip-face .deck-face,
+.flip-face .deck-jog,
+.flip-face .deck-jog-cap,
+.flip-face .deck-jog-media,
+.flip-face .cap-sigle {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -10064,19 +10089,35 @@
   stroke: rgba(28, 25, 23, 0.2);
   stroke-width: 1.2;
 }
-/* Le sigle sur le bouchon, comme l'étiquette centrale d'un disque. Plus de
-   trou du spindle au-dessus depuis le 2026-09-01 (« enlève le trou au
-   centre de cette pastille ») — voir `y="50"` sur `.cap-sigle` dans
-   `PartisCouvertureClient.tsx`, qui revient donc au centre géométrique. */
+/* LE TROU DU SPINDLE du capuchon — mêmes valeurs que celui d'une pochette
+   (`.pochette-pastille::before`) : le carton crème au fond, un liseré sombre
+   au bord. L'ombre intérieure qui creuse le trou d'une pochette n'a pas
+   d'équivalent en SVG ; le liseré seul suffit ici, le capuchon étant bien
+   plus petit. */
+.cap-trou {
+  fill: var(--paper-deep);
+  stroke: rgba(28, 25, 23, 0.35);
+  stroke-width: 1;
+}
+/* LE SIGLE, au-dessus du trou (`y="42"` dans le balisage).
+   ⚠️ LA TAILLE EST CALÉE SUR CELLE D'UNE POCHETTE, pas choisie à l'œil :
+   `.pochette-pastille-sigle` vaut 10 cqw pour une étiquette de 46 cqw, soit
+   21,7 % du diamètre. Le viewBox du capuchon fait 100 unités pour ce même
+   diamètre : 21,7 unités, donc. Elle valait 30 — le capuchon paraissait plus
+   PLEIN que l'étiquette d'une pochette alors que les deux font le même
+   diamètre (44,4 % contre 44,2 % du carré, mesuré au rendu), et c'est ce
+   trop-plein de lettres qui le faisait paraître plus gros.
+   Le contour suit la même réduction (3,5 → 2,5) : c'est un halo de lisibilité,
+   il doit garder son épaisseur RELATIVE aux lettres. */
 .cap-sigle {
   fill: var(--paper);
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 30px;
+  font-size: 21.7px;
   font-weight: 700;
   letter-spacing: 0.02em;
   paint-order: stroke;
   stroke: rgba(28, 25, 23, 0.34);
-  stroke-width: 3.5;
+  stroke-width: 2.5;
   stroke-linejoin: round;
 }
 .deck-jog-cap--vide {
@@ -10114,6 +10155,13 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  /* LA MÊME pochette sert le bac (132 px) et le volet ouvert (260 px). Les
+     bandes du sigle et de la date se dimensionnent donc en `cqw`, d'après la
+     largeur RÉELLE de la boîte — même geste que l'étiquette du disque
+     (`.trophee-repli`), plutôt que des pixels qui conviennent à une taille et
+     pas à l'autre. `inline-size` ne contient que l'axe horizontal : la hauteur
+     continue de venir de l'image. */
+  container-type: inline-size;
 }
 
 /* Les à-plats. `preserveAspectRatio: none` : ils doivent épouser le cadre, pas
@@ -10131,15 +10179,134 @@
 }
 .forme-enjeu { fill: var(--enjeu, #463E3E); }
 .forme-ton { fill: var(--ton, #6E685F); }
-/* L'acronyme, centré, par-dessus tout — le nom du groupe sur la pochette. */
-.pochette-sigle {
-  position: relative;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 34px;
-  font-weight: 700;
+/* L'ÉTIQUETTE DU DISQUE, POSÉE SUR L'ILLUSTRATION — le sigle du parti
+ * au-dessus du trou du spindle, la date en dessous, comme l'étiquette centrale
+ * d'un 45 tours.
+ *
+ * C'EST LA MÊME QUE CELLE DU SINGLE PAS ENCORE PRESSÉ
+ * (`.trophee-etiquette-disque`) : cercle à la couleur du parti, anneau clair
+ * près du bord, trou au centre. Un disque ne change pas de nature quand son
+ * illustration arrive — seul le FOND change, le papier crème cédant la place à
+ * l'image.
+ *
+ * CE QU'ELLE REMPLACE (2026-09-07). Deux bandes noires opaques, le sigle en
+ * haut et la date en bas, et — dans le disque d'or, son volet et les plaques du
+ * fonds — un sigle posé en bas à gauche sur un voile sombre en dégradé. Les
+ * bandes réglaient bien la lisibilité (une illustration engendrée n'a aucune
+ * zone calme garantie, et une ombre portée ne rattrapait que la moitié des cas)
+ * mais coupaient la pochette en trois. L'étiquette règle le même problème par
+ * le même moyen — un aplat opaque sous le texte — sans traverser l'image : elle
+ * porte son propre fond, à la couleur du parti. Les trois `::after` en dégradé
+ * sont partis avec le sigle qu'ils rattrapaient, et l'illustration reprend
+ * toute sa surface.
+ *
+ * LE TROU EST LE POINT, pas un détail de décor : c'est lui qui dit qu'on
+ * pourrait sortir le vinyle de la pochette et le poser sur un plateau. Sans
+ * lui, ce n'est qu'une pastille de couleur.
+ *
+ * Les tailles en `cqw`, d'après la largeur RÉELLE de `.pochette-art`
+ * (`container-type: inline-size`, plus haut) : la même étiquette sert la
+ * couverture d'une plaque (132 px), le disque d'or et le volet ouvert (260 px).
+ *
+ * `z-index: 2` : au-dessus de l'image, et de tout ce qui viendrait se poser
+ * entre les deux. */
+.pochette-pastille {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* 46 % de la pochette. 58 % au premier essai : l'étiquette mangeait la
+     moitié de l'illustration et se lisait comme un cache posé dessus, pas
+     comme une étiquette collée au centre d'un disque. Sur un vrai 45 tours,
+     l'étiquette fait un peu moins de la moitié du disque — c'est cet ordre de
+     grandeur qu'on retrouve ici. */
+  width: 46cqw;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: var(--party, var(--ink-soft));
+  /* UN APLAT PLEIN — pas d'anneau. Un liseré blanc courait au bord
+     (l'imitation du vernis imprimé d'une vraie étiquette) : retiré le
+     2026-09-07, il se lisait comme un contour pâle rapporté sur la couleur du
+     parti plutôt que comme un disque d'un seul tenant.
+     L'ombre portée RESTE : elle n'entoure pas la pastille, elle la DÉCOLLE de
+     l'illustration — sans elle, les deux se lisent sur le même plan et le
+     disque paraît peint sur la pochette plutôt que posé dedans. */
+  box-shadow: 0 1.2cqw 3cqw rgba(28, 25, 23, 0.38);
+}
+/* LE TROU DU SPINDLE, au centre géométrique exact.
+   DÉCOUPLÉ DU TEXTE — le trou, le sigle et la date sont tous les trois en
+   `position: absolute`, aucun n'est dans le flux : c'est la leçon apprise sur
+   `.trophee-etiquette-disque`, où deux tentatives de centrer le trou et le
+   sigle ENSEMBLE, comme un seul groupe, ont fini par pousser le trou hors du
+   centre — le sigle, bien plus grand, pesait tout le bas du groupe. */
+.pochette-pastille::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* 13 % et non les 11 % de `.trophee-etiquette-disque` : sur une étiquette
+     posée au milieu d'une illustration, un trou à 11 % se lit comme une perle
+     claire plutôt que comme un percement — vérifié au rendu, aux quatre
+     tailles. Le fond reste `--paper-deep` : c'est le carton de la pochette
+     qu'on voit à travers, la même convention que l'étiquette du single pas
+     encore pressé. */
+  width: 13%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  /* Le carton de la pochette, vu à travers le trou. Un kraft plus chaud a été
+     essayé le 2026-09-07 et retiré le jour même : le carton d'une pochette est
+     le MÊME papier que celui des cartes « en production » sous le palmarès
+     (`--paper-deep`), sans quoi le même objet a deux couleurs selon qu'il est
+     pressé ou non. */
+  background: var(--paper-deep);
+  /* Le liseré au bord, et l'ombre INTÉRIEURE qui creuse : sans elle, le disque
+     clair paraît posé SUR l'étiquette au lieu d'être percé DEDANS. */
+  box-shadow:
+    0 0 0 1px rgba(28, 25, 23, 0.22),
+    inset 0 0.5px 2px rgba(28, 25, 23, 0.5);
+}
+/* LE SIGLE ET LA DATE, de part et d'autre du trou et à distance ÉGALE de lui :
+   il occupe de 44,5 à 55,5 % de la hauteur de l'étiquette, les deux textes
+   s'arrêtent à 58 %. Ils ne se disputent donc jamais la même moitié. */
+.pochette-pastille-sigle,
+.pochette-pastille-date {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   line-height: 1;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 3px rgba(28, 25, 23, 0.3);
+  color: var(--paper);
+  white-space: nowrap;
+}
+/* LES DEUX TAILLES SONT BORNÉES, et pas seulement proportionnelles. En `cqw`
+   seul, le sigle passait de 7 px sur une couverture rétrécie à 39 px sur le
+   volet ouvert : trop petit d'un côté, démesuré de l'autre. Les bornes tiennent
+   la fourchette lisible, la valeur en `cqw` fait le reste entre les deux. */
+.pochette-pastille-sigle {
+  bottom: 58%;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 900;
+  font-size: clamp(11px, 10cqw, 30px);
+  letter-spacing: -0.01em;
+}
+.pochette-pastille-date {
+  top: 58%;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(6px, 3.6cqw, 11px);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+/* SOUS 100 px, L'ÉTIQUETTE SE TAIT et ne garde que son cercle et son trou : le
+   sigle y tomberait sous 8 px et la date sous 3. C'est le cas de la couverture
+   d'une plaque OUVERTE (64 px), où le nom du parti est de toute façon écrit en
+   toutes lettres juste à côté, dans l'en-tête de la plaque.
+   Une requête de CONTENEUR plutôt qu'une règle par contexte : c'est la largeur
+   réelle de la pochette qui décide, d'où qu'elle vienne. */
+@container (max-width: 100px) {
+  .pochette-pastille-sigle,
+  .pochette-pastille-date { display: none; }
 }
 
 /* Les pistes, comme le verso d'un disque. Fond sombre : c'est du petit texte,
@@ -10213,8 +10380,24 @@
   align-self: baseline;
   border-bottom: 1px dotted var(--rule);
 }
+/* ⚠️ LA VALEUR NE PEUT PLUS SORTIR DE LA POCHETTE, et c'est une règle DURE.
+   Elle valait `flex: none` avec `white-space: nowrap` : une valeur trop longue
+   gardait sa largeur naturelle et débordait de la carte — pas coupée, pas mise
+   en ellipse, DEHORS, par-dessus la page. Le commentaire d'à côté parlait déjà
+   d'une « ellipse visuelle » qu'aucune déclaration ne produisait ; elle est
+   ici maintenant.
+   Les quatre déclarations vont ensemble et aucune ne suffit seule :
+   `flex: 0 1 auto` autorise la valeur à rétrécir, `min-width: 0` lève le
+   plancher que le contenu impose par défaut à un élément flex (sans lui, elle
+   refuse de descendre sous sa largeur intrinsèque et déborde quand même),
+   `overflow: hidden` coupe, `text-overflow: ellipsis` dit que la coupe se voit.
+   Le libellé court (`libelleEnjeuCourt`) reste la PREMIÈRE ligne de défense —
+   une ellipse est un pis-aller, pas une mise en page. Ceci est le filet. */
 .tracklist-metrique {
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0;
   font-family: 'Source Serif 4', Georgia, serif;
   font-size: 12px;
@@ -10237,10 +10420,15 @@
    place — `align-items: center` (et non `baseline`) pour que la jauge et son
    mot s'alignent au centre l'un de l'autre plutôt qu'au pied du texte. */
 .tracklist-ligne--ton { align-items: center; }
+/* LE TON ÉCHAPPE AU FILET, et il le doit : sa métrique n'est pas du texte mais
+   une JAUGE de largeur fixe. La laisser rétrécir l'écraserait, et `overflow:
+   hidden` rognerait son repère. */
 .tracklist-ligne--ton .tracklist-metrique {
   display: flex;
   align-items: center;
   gap: 7px;
+  flex: none;
+  overflow: visible;
 }
 .tracklist-ligne--ton .tracklist-metrique span {
   font-family: 'IBM Plex Mono', monospace;
@@ -10412,8 +10600,7 @@
   .regie-centre { gap: 10px; }
 
   /* La pochette garde ses quatre pistes : c'est elle qui porte les chiffres. */
-  .pochette-sigle { font-size: 26px; }
-  .cap-sigle { font-size: 32px; }
+  .cap-sigle { font-size: 23px; }
 }
 /* Rien de tout cela ne porte d'information : le mouvement s'arrête net pour qui
    demande moins d'animation, et tout reste en place. */
@@ -11054,6 +11241,30 @@
 }
 .fonds-plaque.ouverte { grid-column: 1 / -1; }
 
+/* UN SINGLE N'A PAS DE CADRE (2026-09-07) — ni filet, ni fond crème, ni bandeau
+   dessous : rien que la pochette, comme un mur de disques qu'on parcourt du
+   regard. Le cadre disait « ceci est une fiche » là où la vue Jour montre
+   l'objet lui-même.
+   LES PLAQUES GARDENT LE LEUR : un album et une discographie sont des
+   COMPILATIONS — leur en-tête nomme ce que la carte rassemble et son temps
+   total, et le cadre est ce qui tient l'en-tête et la tracklist ensemble. */
+.fonds-plaque--single {
+  border: 0;
+  background: none;
+}
+/* LA FACE AVANT SE DONNE UN FOND OPAQUE — une GARDE, et il faut dire laquelle.
+   La transparence constatée en tournant venait des images : elles répondaient
+   404 (URL relative, corrigée dans `lib/data/pochettes.ts`), le recto était donc
+   une face VIDE, et l'on voyait au travers. Une fois les images servies, le
+   recto est opaque par lui-même — vérifié en figeant la carte à mi-rotation.
+   La règle reste néanmoins : sans le cadre de la plaque derrière elle, une
+   pochette dont l'image ne charge PAS laisserait de nouveau voir la page à
+   travers pendant qu'elle pivote. L'endos, lui, a toujours eu son fond
+   (`.flip-face--verso`). */
+.fonds-plaque--single .flip-face--recto {
+  background: var(--paper-deep);
+}
+
 /* LE DÉCLENCHEUR — toute la surface visible d'une plaque fermée. Colonne
    (couverture au-dessus du texte) au repos, comme un disque debout dans un bac ;
    rangée (couverture à côté du texte) une fois ouverte, où la couverture cède la
@@ -11103,33 +11314,11 @@
   aspect-ratio: 1 / 1;
   overflow: hidden;
 }
-.fonds-plaque-couverture .pochette-sigle {
-  position: absolute;
-  z-index: 2;
-  left: 8px;
-  bottom: 8px;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  color: var(--paper);
-  text-shadow: 0 1px 3px rgba(28, 25, 23, 0.35);
-}
-/* Le voile sous le sigle : une illustration engendrée peut être claire jusqu'en
-   bas, et un sigle sans fond s'y efface. */
-.fonds-plaque-couverture .pochette-art::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 42%;
-  background: linear-gradient(to bottom, rgba(28, 25, 23, 0) 0%, rgba(28, 25, 23, 0.55) 100%);
-  pointer-events: none;
-}
-.fonds-plaque.ouverte .fonds-plaque-couverture .pochette-sigle { display: none; }
+/* Le sigle en bas à gauche, son voile en dégradé, et la règle qui le masquait
+   une fois la plaque ouverte : tous trois partis le 2026-09-07, remplacés par
+   l'étiquette centrale (`.pochette-pastille`). Elle se tait d'elle-même sur
+   une couverture rétrécie à 64 px — par requête de conteneur, sans qu'aucune
+   règle n'ait à connaître l'état de la plaque. */
 
 .fonds-plaque-tete {
   display: flex;
@@ -11259,9 +11448,12 @@
   outline-offset: -1px;
 }
 /* Sur une COUVERTURE seulement : le sigle en texte, seul repère qui resterait
-   sinon pour parcourir un mur de plaques fermées sans image confirmée. Même
-   position que `.pochette-sigle`, pour que l'œil ne perçoive pas de différence
-   entre une vraie illustration et son repli. */
+   sinon pour parcourir un mur de plaques fermées sans image confirmée.
+   IL RESTE EN BAS À GAUCHE, là où il a toujours été, et ne prend PAS
+   l'étiquette centrale des vraies pochettes (`.pochette-pastille`) : sur cet
+   aplat déjà à la couleur du parti, un disque de la même couleur ne se verrait
+   pas. Les deux ne disent d'ailleurs pas la même chose — une étiquette annonce
+   un disque pressé, ce carré dit qu'il en manque un. */
 .fonds-repli-sigle {
   position: absolute;
   left: 8px;
