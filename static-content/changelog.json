@@ -1,5 +1,11 @@
 [
   {
+    "pr": 764,
+    "date": "2026-09-07T18:24:15Z",
+    "note": "Les pochettes des partis portent maintenant une véritable étiquette de disque en leur centre, nom et date compris, au lieu de deux bandeaux qui recouvraient l'illustration.",
+    "version": "2.45.0-beta.0"
+  },
+  {
     "pr": 763,
     "date": "2026-09-06T22:41:00Z",
     "note": "Une accolade s'était égarée dans un commentaire ; la feuille de style se compile de nouveau.",
